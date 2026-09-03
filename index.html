@@ -1,889 +1,142 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Hongli Liu | Cognitive Neuroscience of Language</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg-primary: #f9f8f6;
-            --bg-surface: #f3f1ee;
-            --bg-elevated: #ece9e4;
-            --border: #ddd9d4;
-            --border-subtle: #e8e5e1;
-            --text-primary: #2c2a27;
-            --text-secondary: #6b6860;
-            --text-tertiary: #9e9b93;
-            --accent: #b08d4e;
-            --accent-dim: rgba(176, 141, 78, 0.1);
-            --accent-glow: rgba(176, 141, 78, 0.06);
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-serif: 'Cormorant Garamond', 'Georgia', serif;
-            --max-width: 900px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        html { scroll-behavior: smooth; font-size: 16px; }
-
-        body {
-            font-family: var(--font-sans);
-            background: #f9f8f6;
-            background-image:
-                radial-gradient(ellipse at 20% 0%, rgba(176, 141, 78, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(176, 141, 78, 0.02) 0%, transparent 50%);
-            color: var(--text-primary);
-            line-height: 1.7;
-            font-weight: 300;
-            letter-spacing: 0.01em;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* === NAVIGATION === */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 0 2rem;
-            height: 64px;
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(249, 248, 246, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: var(--transition);
-        }
-        nav.scrolled { border-bottom-color: var(--border); }
-
-        .nav-brand {
-            font-family: var(--font-serif);
-            font-size: 1.15rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            text-decoration: none;
-            letter-spacing: 0.03em;
-        }
-        .nav-brand span { color: var(--accent); }
-
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transition: var(--transition);
-            position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0;
-            width: 0; height: 1px; background: var(--accent);
-            transition: var(--transition);
-        }
-        .nav-links a:hover { color: var(--text-primary); }
-        .nav-links a:hover::after { width: 100%; }
-
-        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-        .nav-toggle span {
-            display: block; width: 20px; height: 1.5px; background: var(--text-primary);
-            margin: 5px 0; transition: var(--transition);
-        }
-
-        /* === MAIN CONTAINER === */
-        main { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; }
-
-        /* === HERO SECTION === */
-        .hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; padding-top: 64px;
-            position: relative;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(176, 141, 78, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(176, 141, 78, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(176, 141, 78, 0.02) 0%, transparent 40%);
-        }
-        .hero::before {
-            content: ''; position: absolute; top: 200px; right: -100px;
-            width: 400px; height: 400px; border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero::after {
-            content: ''; position: absolute; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b08d4e' fill-opacity='0.03'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none; opacity: 1;
-        }
-        .hero-label {
-            font-size: 0.8rem; font-weight: 500;
-            letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 1.5rem;
-            display: flex; align-items: center; gap: 0.75rem;
-        }
-        .hero-label::before {
-            content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
-        }
-        .hero-name {
-            font-family: var(--font-serif);
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 400; line-height: 1.1;
-            letter-spacing: -0.02em; margin-bottom: 1.25rem;
-        }
-        .hero-title {
-            font-size: 1.1rem; color: #6b6860;
-            font-weight: 300; margin-bottom: 2.5rem; max-width: 560px;
-            line-height: 1.8;
-        }
-        .hero-title em {
-            color: var(--accent); font-style: normal; font-weight: 400;
-        }
-        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-primary, .btn-outline {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.7rem 1.5rem; font-size: 0.8rem;
-            font-weight: 500; letter-spacing: 0.06em;
-            text-transform: uppercase; text-decoration: none;
-            border-radius: 2px; transition: var(--transition);
-            cursor: pointer; border: none; font-family: var(--font-sans);
-        }
-        .btn-primary {
-            background: var(--accent); color: #fff;
-        }
-        .btn-primary:hover { background: #9a7a42; transform: translateY(-1px); }
-        .btn-outline {
-            background: transparent; color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-        .btn-outline:hover {
-            border-color: var(--accent); color: var(--accent);
-            transform: translateY(-1px);
-        }
-
-        .hero-scroll {
-            position: absolute; bottom: 2rem; left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-            color: var(--text-secondary); font-size: 0.7rem;
-            letter-spacing: 0.15em; text-transform: uppercase;
-        }
-        .scroll-line {
-            width: 1px; height: 40px; background: var(--border);
-            position: relative; overflow: hidden;
-        }
-        .scroll-line::after {
-            content: ''; position: absolute; top: -100%; left: 0;
-            width: 100%; height: 100%; background: var(--accent);
-            animation: scrollDown 2s ease-in-out infinite;
-        }
-        @keyframes scrollDown {
-            0% { top: -100%; } 50% { top: 100%; } 100% { top: 100%; }
-        }
-
-        /* === SECTION COMMON === */
-        section { padding: 6rem 0; }
-        .section-header {
-            margin-bottom: 3rem; padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-        }
-        .section-header::after {
-            content: ''; position: absolute; bottom: -1px; left: 0;
-            width: 40px; height: 1px; background: var(--accent);
-        }
-        .section-label {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--accent); margin-bottom: 0.75rem;
-        }
-        .section-title {
-            font-family: var(--font-serif);
-            font-size: 1.8rem; font-weight: 400;
-            letter-spacing: -0.01em;
-        }
-
-        /* === ABOUT === */
-        .about-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 3rem; align-items: start;
-        }
-        .about-text p {
-            color: var(--text-secondary); margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-        }
-        .about-text p:first-of-type::first-letter {
-            font-family: var(--font-serif);
-            font-size: 3rem; float: left; line-height: 1;
-            margin-right: 0.5rem; color: var(--accent);
-            font-weight: 500;
-        }
-        .about-info-list { list-style: none; }
-        .about-info-list li {
-            padding: 1rem 0; border-bottom: 1px solid var(--border-subtle);
-            display: flex; justify-content: space-between; align-items: baseline;
-        }
-        .about-info-list li:last-child { border-bottom: none; }
-        .info-label {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.12em; text-transform: uppercase;
-            color: var(--text-tertiary);
-        }
-        .info-value { color: var(--text-primary); font-size: 0.9rem; text-align: right; }
-        .info-value a {
-            color: var(--text-primary); text-decoration: none;
-            transition: var(--transition);
-        }
-        .info-value a:hover { color: var(--accent); }
-
-        /* === STATS === */
-        .stats {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 1px; background: var(--border);
-            margin: 4rem 0; border-radius: 2px; overflow: hidden;
-        }
-        .stat-item {
-            background: var(--bg-primary);
-            padding: 2rem 1.5rem; text-align: center;
-        }
-        .stat-number {
-            font-family: var(--font-serif);
-            font-size: 2.5rem; font-weight: 400;
-            color: var(--accent); line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-        .stat-label {
-            font-size: 0.7rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--text-tertiary);
-        }
-
-        /* === RESEARCH === */
-        .research-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-        }
-        .research-card {
-            padding: 1.75rem; background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: 2px; transition: var(--transition);
-            position: relative; overflow: hidden;
-        }
-        .research-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 2px; height: 0; background: var(--accent);
-            transition: var(--transition);
-        }
-        .research-card:hover { border-color: var(--border); }
-        .research-card:hover::before { height: 100%; }
-        .research-card-icon {
-            font-size: 1.5rem; margin-bottom: 0.75rem;
-            opacity: 0.6;
-        }
-        .research-card h3 {
-            font-size: 0.95rem; font-weight: 500;
-            margin-bottom: 0.5rem; color: var(--text-primary);
-        }
-        .research-card p {
-            font-size: 0.82rem; color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* === PUBLICATIONS === */
-        .pub-list { display: flex; flex-direction: column; gap: 0; }
-        .pub-item {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-            transition: var(--transition);
-        }
-        .pub-item:first-child { padding-top: 0; }
-        .pub-item:last-child { border-bottom: none; }
-        .pub-meta {
-            display: flex; align-items: center; gap: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
-        .pub-year {
-            font-family: var(--font-serif);
-            font-size: 1.1rem; color: var(--accent);
-            font-weight: 500; min-width: 45px;
-        }
-        .pub-journal {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.05em; text-transform: uppercase;
-            color: var(--text-tertiary);
-            padding: 0.15rem 0.5rem; border: 1px solid var(--border);
-            border-radius: 1px;
-        }
-        .pub-journal.ssci { color: #3d7a99; border-color: rgba(61, 122, 153, 0.3); }
-        .pub-journal.sci { color: #4a8a4a; border-color: rgba(74, 138, 74, 0.3); }
-        .pub-title {
-            font-size: 0.92rem; font-weight: 400;
-            color: var(--text-primary); margin-bottom: 0.35rem;
-            line-height: 1.5;
-        }
-        .pub-authors {
-            font-size: 0.8rem; color: var(--text-secondary);
-        }
-        .pub-authors em { color: var(--accent); font-style: normal; font-weight: 500; }
-        .pub-link {
-            display: inline-flex; align-items: center; gap: 0.3rem;
-            font-size: 0.75rem; color: var(--text-tertiary);
-            text-decoration: none; margin-top: 0.5rem;
-            transition: var(--transition);
-        }
-        .pub-link:hover { color: var(--accent); }
-
-        /* === EDUCATION === */
-        .timeline { position: relative; padding-left: 2rem; }
-        .timeline::before {
-            content: ''; position: absolute; left: 0; top: 0.5rem;
-            width: 1px; height: 100%; background: var(--border);
-        }
-        .timeline-item {
-            position: relative; padding-bottom: 2.5rem;
-        }
-        .timeline-item:last-child { padding-bottom: 0; }
-        .timeline-item::before {
-            content: ''; position: absolute;
-            left: -2rem; top: 0.5rem;
-            width: 7px; height: 7px; border-radius: 50%;
-            background: var(--bg-primary); border: 1.5px solid var(--accent);
-        }
-        .timeline-period {
-            font-size: 0.75rem; letter-spacing: 0.1em;
-            color: var(--accent); font-weight: 500;
-            margin-bottom: 0.35rem;
-        }
-        .timeline-degree {
-            font-size: 1rem; font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-        .timeline-school {
-            font-size: 0.85rem; color: var(--text-secondary);
-        }
-        .timeline-detail {
-            font-size: 0.82rem; color: var(--text-tertiary);
-            margin-top: 0.35rem;
-        }
-
-        /* === SKILLS === */
-        .skills-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-        }
-        .skill-category h3 {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--text-tertiary); margin-bottom: 1rem;
-            padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);
-        }
-        .skill-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .skill-tag {
-            padding: 0.4rem 0.9rem; font-size: 0.8rem;
-            background: var(--bg-surface); border: 1px solid var(--border-subtle);
-            border-radius: 1px; color: var(--text-secondary);
-            transition: var(--transition);
-        }
-        .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
-
-        /* === AWARDS === */
-        .award-item {
-            display: flex; gap: 1.25rem; padding: 1.25rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-            transition: var(--transition);
-        }
-        .award-item:hover { padding-left: 0.5rem; }
-        .award-item:last-child { border-bottom: none; }
-        .award-year {
-            font-family: var(--font-serif);
-            font-size: 1rem; color: var(--accent);
-            font-weight: 500; min-width: 40px; padding-top: 0.1rem;
-        }
-        .award-content h4 {
-            font-size: 0.9rem; font-weight: 500;
-            margin-bottom: 0.15rem;
-        }
-        .award-content p {
-            font-size: 0.8rem; color: var(--text-secondary);
-        }
-
-        /* === CONTACT === */
-        .contact-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-        .contact-item {
-            display: flex; align-items: flex-start; gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .contact-icon {
-            width: 40px; height: 40px;
-            display: flex; align-items: center; justify-content: center;
-            border: 1px solid var(--border); border-radius: 2px;
-            color: var(--accent); font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-        .contact-label {
-            font-size: 0.7rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--text-tertiary);
-            margin-bottom: 0.2rem;
-        }
-        .contact-value { font-size: 0.9rem; }
-        .contact-value a {
-            color: var(--text-primary); text-decoration: none;
-            transition: var(--transition);
-        }
-        .contact-value a:hover { color: var(--accent); }
-        .contact-note {
-            font-size: 0.82rem; color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        /* === FOOTER === */
-        footer {
-            padding: 3rem 2rem; border-top: 1px solid var(--border);
-            text-align: center;
-        }
-        .footer-content {
-            max-width: var(--max-width); margin: 0 auto;
-        }
-        .footer-links {
-            display: flex; justify-content: center; gap: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .footer-links a {
-            color: var(--text-tertiary); text-decoration: none;
-            font-size: 0.75rem; letter-spacing: 0.08em;
-            text-transform: uppercase; transition: var(--transition);
-        }
-        .footer-links a:hover { color: var(--accent); }
-        .footer-copy {
-            font-size: 0.75rem; color: var(--text-tertiary);
-        }
-
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            nav { padding: 0 1.25rem; }
-            .nav-links { display: none; }
-            .nav-toggle { display: block; }
-            .nav-links.open {
-                display: flex; flex-direction: column;
-                position: absolute; top: 64px; left: 0; right: 0;
-                background: rgba(249, 248, 246, 0.98);
-                padding: 1.5rem 2rem; gap: 1.25rem;
-                border-bottom: 1px solid var(--border);
-            }
-            main { padding: 0 1.25rem; }
-            .hero { text-align: center; align-items: center; }
-            .hero-label { justify-content: center; }
-            .hero-cta { justify-content: center; }
-            .hero-name { font-size: 2.4rem; }
-            .about-grid, .research-grid, .skills-grid,
-            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .stat-number { font-size: 2rem; }
-            section { padding: 4rem 0; }
-        }
-        @media (max-width: 480px) {
-            .hero-cta { flex-direction: column; }
-            .btn-primary, .btn-outline { text-align: center; justify-content: center; }
-        }
-
-        /* === ANIMATIONS === */
-        .fade-in {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hongli Liu | Language &amp; Cognition</title>
+  <meta name="description" content="Hongli Liu, Research Assistant at The Hong Kong Polytechnic University. Research in language and cognition, publications, academic background, and EEG/ERP materials."><meta name="author" content="Hongli Liu">
+  <meta name="theme-color" content="#f8fafc"><meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="canonical" href="https://liuhongli775.github.io/"><meta property="og:type" content="profile">
+  <meta property="og:title" content="Hongli Liu | Language &amp; Cognition"><meta property="og:description" content="Hongli Liu, Research Assistant at The Hong Kong Polytechnic University. Research in language and cognition, publications, academic background, and EEG/ERP materials.">
+  <meta property="og:url" content="https://liuhongli775.github.io/"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg"><link rel="stylesheet" href="./assets/main.css">
+  <script defer src="./assets/main.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Hongli Liu", "url": "https://liuhongli775.github.io", "jobTitle": "Research Assistant", "worksFor": {"@type": "Organization", "name": "The Hong Kong Polytechnic University", "url": "https://www.polyu.edu.hk/"}, "sameAs": ["https://github.com/liuhongli775"], "knowsAbout": ["Sentence comprehension", "Visual word recognition", "Semantic processing", "Large language models"]}</script>
 </head>
-<body>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <a href="#" class="nav-brand">H<span>.</span>Liu</a>
-        <div class="nav-links" id="navLinks">
-            <a href="#about">About</a>
-            <a href="#research">Research</a>
-            <a href="#publications">Publications</a>
-            <a href="#education">Education</a>
-            <a href="#contact">Contact</a>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="academic-folio">
+    <header class="profile-rail">
+      <div class="profile-top"><p class="eyebrow">Language &amp; Cognition</p><h1>Hongli Liu</h1>
+        <p class="role-line">Research Assistant<br>The Hong Kong Polytechnic University</p>
+        <div class="contact-links" id="contact"><a href="mailto:15082195267@163.com" aria-label="Email Hongli Liu">Email ↗</a><a href="https://github.com/liuhongli775" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      </div>
+      <nav class="section-nav" aria-label="Main navigation"><a href="#background" aria-current="location"><span class="nav-number" aria-hidden="true">01</span><span>Background</span></a><a href="#publications"><span class="nav-number" aria-hidden="true">02</span><span>Publications &amp; Presentations</span></a><a href="#honors"><span class="nav-number" aria-hidden="true">03</span><span>Honors &amp; Awards</span></a><a href="#materials"><span class="nav-number" aria-hidden="true">04</span><span>Materials</span></a><a href="#beyond"><span class="nav-number" aria-hidden="true">05</span><span>Beyond Research</span></a></nav>
+      <div class="rail-bottom"><p class="eyebrow">Research interests</p><p>Sentence comprehension · Visual word recognition · Semantic processing · Large language models</p><span class="rail-year">Academic profile / 2026</span></div>
+      <p class="print-contact">15082195267@163.com · https://liuhongli775.github.io</p>
+    </header>
+    <div class="folio-workspace">
+      <div class="folio-toolbar"><span>Hongli Liu <span class="toolbar-slash">/</span> Academic profile</span><button class="view-toggle js-only" type="button" data-view-toggle aria-pressed="false">Continuous view</button></div>
+      <main id="main" tabindex="-1">
+        <div class="page-track">
+          <section class="section folio-page" id="background" aria-labelledby="background-heading">
+            <header class="folio-heading"><p class="eyebrow">01 / Academic background</p>
+      <div class="heading-row"><h2 id="background-heading" tabindex="-1">Background</h2></div></header>
+            <p class="intro-copy">I am interested in how people recognize written words and build meaning in context. My research combines behavioral experiments, EEG/ERP methods, and computational measures of language predictability.</p>
+            <div class="background-layout">
+              <div class="background-column">
+                <h3 class="subheading">Appointments &amp; education</h3>
+                <article class="experience-item current-position"><p class="dates"><time datetime="2026-08-10">August 10, 2026 – present</time></p><h4>Research Assistant</h4><p class="institution">The Hong Kong Polytechnic University</p><p class="supervisor">Supervisor: <a href="https://www.polyu.edu.hk/lst/people/academic-staff/zhu-jiaqiang/" target="_blank" rel="noopener noreferrer">Dr. Jiaqiang Zhu</a></p></article>
+                <article class="experience-item"><p class="dates">September 2023 – June 2026</p><h4>M.A. in Linguistics and Applied Linguistics</h4><p class="institution">Sichuan University</p><p class="supervisor">Supervisor: Dr. Feng Gu</p></article><article class="experience-item"><p class="dates">September 2019 – June 2023</p><h4>B.A. in Chinese Language and Literature</h4><p class="institution">Sichuan University</p></article>
+                <h3 class="subheading toolkit-heading">Methods &amp; tools</h3><dl class="skill-list"><div><dt>Experiments</dt><dd>EEG/ERP, behavioral experiments, E-prime; basic eye-tracking</dd></div><div><dt>Analysis</dt><dd>MATLAB, R, Python, SPSS</dd></div></dl>
+              </div>
+              <div class="research-column"><h3 class="subheading">Research experience</h3><article class="research-project"><p class="project-context">Master’s dissertation · Sichuan University</p>
+          <h4><span class="project-number" aria-hidden="true">01</span>Coercion and predictability in Mandarin</h4><p>I investigate coercion in Mandarin adverb–noun constructions, bringing together EEG, behavioral norms, and computational measures of predictability.</p>
+          <ul class="contributions"><li>Designed the EEG experiment and stimuli, recruited 60 participants, and conducted EEG data collection.</li><li>Collected completion norms and semantic ratings, computed LLM surprisal, and modeled trial-level EEG responses using regression-based ERP estimation (rERP).</li></ul>
+          <p class="method-line">EEG · Completion norms · LLM surprisal · rERP</p></article><article class="research-project"><p class="project-context">Collaborative project · October 2023–April 2025</p>
+          <h4><span class="project-number" aria-hidden="true">02</span>Object size and semantic processing</h4><p>This project examined cognitive and neural differences in processing words referring to small and large objects.</p>
+          <ul class="contributions"><li>Recruited 228 participants across the behavioral and EEG experiments and organized subjective semantic ratings.</li><li>Preprocessed EEG data in MATLAB and contributed to multivariate pattern analysis using MVPA-Light.</li></ul>
+          <p class="method-line">Behavioral experiments · EEG preprocessing · MVPA</p><a class="research-link" href="https://doi.org/10.1016/j.cortex.2025.04.003" target="_blank" rel="noopener noreferrer">Related paper ↗</a></article><article class="research-project"><p class="project-context">Collaborative project · September 2023–April 2025</p>
+          <h4><span class="project-number" aria-hidden="true">03</span>Orthographic processing and the ND250</h4><p>This project investigated the functional interpretation of the ND250 response by comparing handwritten and printed words.</p>
+          <ul class="contributions"><li>Contributed to the 2 × 2 experimental design, prepared 300 stimuli, and independently conducted the EEG experiment after recruiting 30 participants.</li><li>Performed univariate ND250 analyses and exploratory mass-univariate analyses with false discovery rate correction.</li></ul>
+          <p class="method-line">Experimental design · EEG/ERP · Mass-univariate analysis</p><a class="research-link" href="https://doi.org/10.1016/j.jneuroling.2025.101249" target="_blank" rel="noopener noreferrer">Related paper ↗</a></article>
+                <details class="extra-details"><summary>Earlier work in linguistics</summary><div class="extra-content"><article><h4>Word-class conversion in Mashi Wentong</h4><p class="dates">September 2022–June 2023</p><p>Analyzed grammatical categories and the jia jie (category borrowing) framework in Mashi Wentong, supervised by Dr. Tao Wang.</p></article><article><h4>Regional variation in Mandarin erhua</h4><p class="dates">September 2022–April 2023</p><p>Classified over 2,900 dictionary entries and organized dialect data in an Excel database, supervised by Prof. Chunhui Liu.</p></article></div></details>
+              </div>
+            </div>
+          </section>
+          <section class="section folio-page" id="publications" aria-labelledby="publications-heading">
+            <header class="folio-heading"><p class="eyebrow">02 / Research output</p>
+      <div class="heading-row"><h2 id="publications-heading" tabindex="-1">Publications &amp; Presentations</h2><a class="download-bib" href="./publications.bib" download>Article citations (.bib) ↓</a></div></header>
+            <p class="section-deck">Journal articles and conference contributions, most recent first.</p>
+            <ol class="pub-list"><li class="output-entry conference-presentation" data-date="2026">
+          <p class="output-date"><time datetime="2026">2026</time></p>
+          <div><p class="output-type">Conference poster</p><h3 class="pub-title">Coercion or Predictability? Evidence from Mandarin Adverb–Nominal Degree Constructions.</h3>
+          <p class="pub-venue">International Symposium on Language Science (ISLS), 2026.</p>
+          <p class="conference-theme">Interdisciplinary Research and the Legacy of Yuen Ren Chao</p></div></li><li class="output-entry publication" data-date="2025-06">
+      <p class="output-date"><time datetime="2025-06">June 2025</time></p>
+      <div><p class="output-type">Journal article</p>
+        <h3 class="pub-title"><a href="https://doi.org/10.1016/j.cortex.2025.04.003" target="_blank" rel="noopener noreferrer">Graspability in disguise: The cognitive and neural differences in processing words representing small and big objects</a></h3>
+        <p class="pub-authors">Yu, R., <strong>Liu, H.</strong>, Ran, Y., &amp; Gu, F. (2025).</p>
+        <p class="pub-journal"><em>Cortex, 187</em>, 52–73.</p>
+        <div class="pub-links"><a href="https://doi.org/10.1016/j.cortex.2025.04.003" target="_blank" rel="noopener noreferrer">Read paper <span aria-hidden="true">↗</span></a>
+          <details class="citation"><summary>BibTeX<span class="sr-only"> for Graspability in disguise: The cognitive and neural differences in processing words representing small and big objects</span></summary>
+            <pre id="yu2025graspability" tabindex="0">@article{yu2025graspability,
+  author = {Yu, Ruifeng and Liu, Hongli and Ran, Yuyang and Gu, Feng},
+  title = {{Graspability in disguise: The cognitive and neural differences in processing words representing small and big objects}},
+  journal = {Cortex},
+  year = {2025},
+  volume = {187},
+  pages = {52--73},
+  doi = {10.1016/j.cortex.2025.04.003}
+}</pre>
+            <button type="button" class="copy-button js-only" data-copy="yu2025graspability">Copy citation</button><span class="copy-status" role="status" aria-live="polite"></span>
+          </details>
         </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
-    <main>
-        <!-- Hero -->
-        <section class="hero" id="hero">
-            <div class="hero-label">Cognitive Neuroscience of Language</div>
-            <h1 class="hero-name">Hongli Liu</h1>
-            <p class="hero-title">
-                Master's student at <em>Sichuan University</em>, exploring the neural mechanisms
-                underlying visual word recognition, semantic processing, and orthographic processing
-                using EEG and behavioral methods.
-            </p>
-            <div class="hero-cta">
-                <a href="#publications" class="btn-primary">View Publications</a>
-                <a href="mailto:2023221030102@stu.scu.edu.cn" class="btn-outline">Get in Touch</a>
-            </div>
-            <div class="hero-scroll">
-                <div class="scroll-line"></div>
-                <span>Scroll</span>
-            </div>
-        </section>
-
-        <!-- About -->
-        <section id="about" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">About</div>
-                <h2 class="section-title">A Brief Introduction</h2>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>
-                        I am a Master's student in the Neurocognitive Laboratory for Linguistics
-                        and Semiotics (LSCN Lab) at Sichuan University, supervised by Associate
-                        Professor Feng Gu. My research focuses on the cognitive and neural
-                        mechanisms of language processing, particularly how the brain recognizes
-                        and processes visual words, extracts meaning from linguistic input, and
-                        handles orthographic information across different writing systems.
-                    </p>
-                    <p>
-                        I am proficient in experimental design and data analysis, with expertise in
-                        EEG/ERP paradigms, eye-tracking, and a range of statistical and
-                        computational tools. My goal is to advance our understanding of how the
-                        human brain achieves the remarkable feat of reading and understanding language.
-                    </p>
-                </div>
-                <div>
-                    <ul class="about-info-list">
-                        <li>
-                            <span class="info-label">Name</span>
-                            <span class="info-value">Hongli Liu / 刘鸿利</span>
-                        </li>
-                        <li>
-                            <span class="info-label">Affiliation</span>
-                            <span class="info-value">Sichuan University</span>
-                        </li>
-                        <li>
-                            <span class="info-label">Program</span>
-                            <span class="info-value">M.A. in Linguistics</span>
-                        </li>
-                        <li>
-                            <span class="info-label">GPA</span>
-                            <span class="info-value">3.93 / 4.00</span>
-                        </li>
-                        <li>
-                            <span class="info-label">Lab</span>
-                            <span class="info-value">LSCN Lab</span>
-                        </li>
-                        <li>
-                            <span class="info-label">Supervisor</span>
-                            <span class="info-value">Prof. Feng Gu</span>
-                        </li>
-                        <li>
-                            <span class="info-label">Email</span>
-                            <span class="info-value"><a href="mailto:2023221030102@stu.scu.edu.cn">2023221030102@stu.scu.edu.cn</a></span>
-                        </li>
-                        <li>
-                            <span class="info-label">GitHub</span>
-                            <span class="info-value"><a href="https://github.com/liuhongli775" target="_blank">liuhongli775</a></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <div class="stats fade-in">
-            <div class="stat-item">
-                <div class="stat-number">3.93</div>
-                <div class="stat-label">GPA / 4.00</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">2</div>
-                <div class="stat-label">Publications</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">7.0</div>
-                <div class="stat-label">IELTS Score</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">6+</div>
-                <div class="stat-label">Tools & Skills</div>
-            </div>
+      </div></li><li class="output-entry publication" data-date="2025-05">
+      <p class="output-date"><time datetime="2025-05">May 2025</time></p>
+      <div><p class="output-type">Journal article</p>
+        <h3 class="pub-title"><a href="https://doi.org/10.1016/j.jneuroling.2025.101249" target="_blank" rel="noopener noreferrer">ND250 as a prediction error signal in orthographic processing: Evidence from comparing ERPs to handwritten and printed words</a></h3>
+        <p class="pub-authors"><strong>Liu, H.</strong>, Zhang, J., &amp; Gu, F. (2025).</p>
+        <p class="pub-journal"><em>Journal of Neurolinguistics, 74</em>, 101249.</p>
+        <div class="pub-links"><a href="https://doi.org/10.1016/j.jneuroling.2025.101249" target="_blank" rel="noopener noreferrer">Read paper <span aria-hidden="true">↗</span></a>
+          <details class="citation"><summary>BibTeX<span class="sr-only"> for ND250 as a prediction error signal in orthographic processing: Evidence from comparing ERPs to handwritten and printed words</span></summary>
+            <pre id="liu2025nd250" tabindex="0">@article{liu2025nd250,
+  author = {Liu, Hongli and Zhang, Jiayi and Gu, Feng},
+  title = {{ND250 as a prediction error signal in orthographic processing: Evidence from comparing ERPs to handwritten and printed words}},
+  journal = {Journal of Neurolinguistics},
+  year = {2025},
+  volume = {74},
+  pages = {101249},
+  doi = {10.1016/j.jneuroling.2025.101249}
+}</pre>
+            <button type="button" class="copy-button js-only" data-copy="liu2025nd250">Copy citation</button><span class="copy-status" role="status" aria-live="polite"></span>
+          </details>
         </div>
-
-        <!-- Research -->
-        <section id="research" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Research</div>
-                <h2 class="section-title">Research Interests</h2>
+      </div></li></ol>
+          </section>
+          <section class="section folio-page" id="honors" aria-labelledby="honors-heading">
+            <header class="folio-heading"><p class="eyebrow">03 / Academic recognition</p>
+      <div class="heading-row"><h2 id="honors-heading" tabindex="-1">Honors &amp; Awards</h2></div></header>
+            <ul class="honors-list"><li class="honor-item"><p class="dates">2025</p><h3>National Scholarship</h3></li><li class="honor-item"><p class="dates">2025</p><h3>Outstanding Graduate of Sichuan University</h3></li><li class="honor-item"><p class="dates">2023–2024</p><h3>Outstanding Graduate Student of Sichuan University</h3></li><li class="honor-item"><p class="dates">2023–2024, 2024–2025</p><h3>Outstanding Graduate Student Leader, College of Literature and Journalism</h3></li><li class="honor-item"><p class="dates">2024</p><h3>Outstanding Teaching Assistant of Sichuan University</h3></li><li class="honor-item"><p class="dates">2024</p><h3>Outstanding Student</h3><p class="honor-detail">The Sixth Summer School on Applied Linguistics and Cognitive Neuroscience, Jinan University</p></li></ul>
+          </section>
+          <section class="section folio-page" id="materials" aria-labelledby="materials-heading">
+            <header class="folio-heading"><p class="eyebrow">04 / Notes &amp; resources</p>
+      <div class="heading-row"><h2 id="materials-heading" tabindex="-1">Materials</h2></div></header>
+            <p class="section-deck">A practical resource from my EEG/ERP work.</p><article class="material" id="eeg-handbook">
+          <a class="material-cover" href="./materials/EEG_Preprocessing_Handbook.pdf" target="_blank" rel="noopener noreferrer"><img src="./assets/handbook-cover.png" alt="Cover of the EEG/ERP Preprocessing Manual" width="560" height="792"></a>
+          <div class="material-body"><p class="eyebrow">Research notes / EEG &amp; ERP</p>
+            <h3><a href="./materials/EEG_Preprocessing_Handbook.pdf" target="_blank" rel="noopener noreferrer">EEG/ERP Preprocessing Manual</a></h3>
+            <p class="material-subtitle">A practical workflow using EEGLAB and ERPLAB</p><p class="material-description">My practical notes on EEG/ERP preprocessing, including bad-channel and artifact identification, ICA component assessment, and ICA-weight transfer between processing branches.</p>
+            <dl class="resource-facts"><div><dt>Format</dt><dd>English · PDF · 23 pages</dd></div><div><dt>Updated</dt><dd><time datetime="2026-08-13">August 13, 2026</time></dd></div><div><dt>File size</dt><dd>6.3 MB</dd></div></dl>
+            <div class="material-links"><a class="pdf-button" href="./materials/EEG_Preprocessing_Handbook.pdf" target="_blank" rel="noopener noreferrer">Read PDF <span aria-hidden="true">↗</span></a><a href="./materials/EEG_Preprocessing_Handbook.pdf" download>Download <span aria-hidden="true">↓</span></a></div>
+            <details class="material-note"><summary>About this resource</summary><p>Personal research notes, not an official software manual. The batch-processing script mentioned as Attachment 2 is not included in this PDF.</p></details>
+          </div></article>
+          </section>
+          <section class="section folio-page beyond" id="beyond" aria-labelledby="beyond-heading">
+            <header class="folio-heading"><p class="eyebrow">05 / Outside the lab</p>
+      <div class="heading-row"><h2 id="beyond-heading" tabindex="-1">Beyond Research</h2></div></header>
+            <div class="personal-layout"><div><p class="beyond-copy">Outside research, I enjoy hiking, running, working out, and playing badminton.</p><ul class="hobby-list"><li><span aria-hidden="true">01</span>Hiking</li><li><span aria-hidden="true">02</span>Running</li><li><span aria-hidden="true">03</span>Fitness</li><li><span aria-hidden="true">04</span>Badminton</li></ul></div>
+              <div class="landscape" aria-hidden="true">
+                <svg viewBox="0 0 360 420" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="265" cy="85" r="34" stroke="currentColor" stroke-width="1"/><path d="M15 245L110 108L160 178L198 136L345 320M15 286L87 202L138 255L220 182L345 354M15 325L100 275L185 316L246 275L345 387M15 362L75 336L143 371L215 341L292 397" stroke="currentColor" stroke-width="1.4"/><path d="M110 108L101 146L121 137L137 165M198 136L184 176L209 163L220 182" stroke="currentColor"/><path d="M5 398H355" stroke="currentColor"/></svg>
+                <span>Beyond the desk</span>
+              </div>
             </div>
-            <div class="research-grid">
-                <div class="research-card">
-                    <div class="research-card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg>
-                    </div>
-                    <h3>Visual Word Recognition</h3>
-                    <p>Investigating how the visual system processes written words, from early orthographic analysis to later lexical access, using ERP components such as N170, N250, and P3.</p>
-                </div>
-                <div class="research-card">
-                    <div class="research-card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
-                    </div>
-                    <h3>Semantic Processing</h3>
-                    <p>Exploring the neural mechanisms of meaning extraction during language comprehension, including semantic integration, prediction, and the N400 component.</p>
-                </div>
-                <div class="research-card">
-                    <div class="research-card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
-                    </div>
-                    <h3>Orthographic Processing</h3>
-                    <p>Studying how orthographic structure and regularity influence word processing, with a focus on Chinese character recognition and cross-linguistic comparisons.</p>
-                </div>
-                <div class="research-card">
-                    <div class="research-card-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4m0 0V8m0 4 3-3"/><path d="M22 12h-4m0 0v4m0-4-3 3"/><path d="M12 2v4m0 4h.01"/><path d="M12 18v4m-4-2h8"/></svg>
-                    </div>
-                    <h3>EEG / ERP Methods</h3>
-                    <p>Designing and conducting EEG experiments to capture real-time neural responses during language processing tasks, with expertise in signal processing and component analysis.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Publications -->
-        <section id="publications" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Publications</div>
-                <h2 class="section-title">Selected Publications</h2>
-            </div>
-            <div class="pub-list">
-                <div class="pub-item">
-                    <div class="pub-meta">
-                        <span class="pub-year">2025</span>
-                        <span class="pub-journal ssci">SSCI</span>
-                    </div>
-                    <div class="pub-title">ND250 as a prediction error signal in orthographic processing</div>
-                    <div class="pub-authors"><em>Liu, H.</em>, Zhang, J., & Gu, F.</div>
-                    <div class="pub-authors" style="margin-top: 0.15rem; font-size: 0.78rem; color: var(--text-tertiary);">
-                        Journal of Neurolinguistics, 74, 101249
-                    </div>
-                    <a href="https://doi.org/10.1016/j.jneuroling.2025.101249" target="_blank" class="pub-link">DOI &rarr;</a>
-                </div>
-                <div class="pub-item">
-                    <div class="pub-meta">
-                        <span class="pub-year">2024</span>
-                        <span class="pub-journal ssci">SSCI</span>
-                    </div>
-                    <div class="pub-title">Early lexical processing of Chinese one-character words and Mongolian words: A comparative study using event-related potentials</div>
-                    <div class="pub-authors">Yu, R., <em>Liu, H.</em>, & Gu, F.*</div>
-                    <div class="pub-authors" style="margin-top: 0.15rem; font-size: 0.78rem; color: var(--text-tertiary);">
-                        Cortex, 178, 108–119
-                    </div>
-                    <a href="https://doi.org/10.1016/j.cortex.2024.08.009" target="_blank" class="pub-link">DOI &rarr;</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Education -->
-        <section id="education" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Education</div>
-                <h2 class="section-title">Academic Background</h2>
-            </div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-period">2023 – Present</div>
-                    <div class="timeline-degree">M.A. in Linguistics</div>
-                    <div class="timeline-school">Sichuan University, College of Literature and Journalism</div>
-                    <div class="timeline-detail">Neurocognitive Laboratory for Linguistics and Semiotics &middot; Supervisor: Prof. Feng Gu &middot; GPA: 3.93/4.00</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-period">2019 – 2023</div>
-                    <div class="timeline-degree">B.A. in Chinese Language and Literature</div>
-                    <div class="timeline-school">Sichuan University</div>
-                    <div class="timeline-detail">Outstanding Graduate</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills -->
-        <section id="skills" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Skills</div>
-                <h2 class="section-title">Technical Proficiency</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Experiment & Research</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">E-Prime</span>
-                        <span class="skill-tag">PsychoPy</span>
-                        <span class="skill-tag">EEG/ERP</span>
-                        <span class="skill-tag">Eye Tracking</span>
-                        <span class="skill-tag">Experimental Design</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Data Analysis</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">SPSS</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">MATLAB</span>
-                        <span class="skill-tag">R</span>
-                        <span class="skill-tag">EEGLAB</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Language</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Mandarin (Native)</span>
-                        <span class="skill-tag">English (IELTS 7.0)</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Development</h3>
-                    <div class="skill-list">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">LaTeX</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                        <span class="skill-tag">JavaScript</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Awards -->
-        <section id="awards" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Honors</div>
-                <h2 class="section-title">Awards & Recognition</h2>
-            </div>
-            <div class="award-item">
-                <div class="award-year">2024</div>
-                <div class="award-content">
-                    <h4>Outstanding Master's Student Scholarship, Sichuan University</h4>
-                </div>
-            </div>
-            <div class="award-item">
-                <div class="award-year">2023</div>
-                <div class="award-content">
-                    <h4>Outstanding Graduate, Sichuan University</h4>
-                </div>
-            </div>
-            <div class="award-item">
-                <div class="award-year">2022</div>
-                <div class="award-content">
-                    <h4>National Scholarship</h4>
-                </div>
-            </div>
-            <div class="award-item">
-                <div class="award-year">2021</div>
-                <div class="award-content">
-                    <h4>First-Class University Scholarship, Sichuan University</h4>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="fade-in">
-            <div class="section-header">
-                <div class="section-label">Contact</div>
-                <h2 class="section-title">Get in Touch</h2>
-            </div>
-            <div class="contact-grid">
-                <div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-                        <div>
-                            <div class="contact-label">Email</div>
-                            <div class="contact-value">
-                                <a href="mailto:2023221030102@stu.scu.edu.cn">2023221030102@stu.scu.edu.cn</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-                        <div>
-                            <div class="contact-label">Location</div>
-                            <div class="contact-value">Chengdu, Sichuan, China</div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-                        <div>
-                            <div class="contact-label">Lab</div>
-                            <div class="contact-value">
-                                <a href="https://liuhongli775.github.io/LSCN-Lab/" target="_blank">LSCN Lab Website &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg></div>
-                        <div>
-                            <div class="contact-label">GitHub</div>
-                            <div class="contact-value">
-                                <a href="https://github.com/liuhongli775" target="_blank">github.com/liuhongli775</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-note">
-                    <p>
-                        I am always open to discussing research collaborations, academic exchange,
-                        or potential Ph.D. opportunities. If you are interested in cognitive
-                        neuroscience of language, feel free to reach out.
-                    </p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#about">About</a>
-                <a href="#research">Research</a>
-                <a href="#publications">Publications</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <div class="footer-copy">
-                &copy; 2025 Hongli Liu. Built with care.
-            </div>
+          </section>
         </div>
-    </footer>
-
-    <script>
-        // Scroll-based nav border
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // Mobile nav toggle
-        document.getElementById('navToggle').addEventListener('click', () => {
-            document.getElementById('navLinks').classList.toggle('open');
-        });
-        document.querySelectorAll('.nav-links a').forEach(a => {
-            a.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-            });
-        });
-
-        // Fade-in on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-    </script>
-
+      </main>
+      <footer class="folio-footer"><span class="footer-credit">© 2026 Hongli Liu</span>
+        <div class="page-controls" aria-label="Page navigation"><button type="button" data-prev aria-label="Previous page">←</button><span class="page-status" aria-live="polite" aria-atomic="true">01 / 05</span><button type="button" data-next aria-label="Next page">→</button><span class="keyboard-hint">Use ← → to turn pages</span></div>
+        <button type="button" class="print-button js-only" data-print>Print / Save as PDF</button>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>

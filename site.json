@@ -1,0 +1,118 @@
+{
+  "name": "Hongli Liu",
+  "email": "15082195267@163.com",
+  "github": "https://github.com/liuhongli775",
+  "url": "https://liuhongli775.github.io",
+  "updated": "2026-09-03",
+  "personal": {
+    "heading": "Beyond Research",
+    "text": "Outside research, I enjoy hiking, running, working out, and playing badminton.",
+    "hobbies": ["Hiking", "Running", "Fitness", "Badminton"]
+  },
+  "position": {
+    "title": "Research Assistant",
+    "institution": "The Hong Kong Polytechnic University",
+    "institution_url": "https://www.polyu.edu.hk/",
+    "supervisor": "Jiaqiang Zhu",
+    "supervisor_url": "https://www.polyu.edu.hk/lst/people/academic-staff/zhu-jiaqiang/",
+    "start": "2026-08-10",
+    "date_label": "August 10, 2026 – present"
+  },
+  "about": "I am interested in how people recognize written words and build meaning in context. My research combines behavioral experiments, EEG/ERP methods, and computational measures of language predictability.",
+  "background": "My academic background is in Linguistics and Applied Linguistics at Sichuan University, where my master’s research was supervised by Dr. Feng Gu.",
+  "interests": ["Sentence comprehension", "Visual word recognition", "Semantic processing", "Large language models"],
+  "publications": [
+    {
+      "id": "liu2025nd250",
+      "title": "ND250 as a prediction error signal in orthographic processing: Evidence from comparing ERPs to handwritten and printed words",
+      "authors": ["Liu, H.", "Zhang, J.", "Gu, F."],
+      "bib_authors": "Liu, Hongli and Zhang, Jiayi and Gu, Feng",
+      "year": "2025",
+      "date": "2025-05",
+      "date_label": "May 2025",
+      "journal": "Journal of Neurolinguistics",
+      "volume": "74",
+      "pages": "101249",
+      "doi": "10.1016/j.jneuroling.2025.101249"
+    },
+    {
+      "id": "yu2025graspability",
+      "title": "Graspability in disguise: The cognitive and neural differences in processing words representing small and big objects",
+      "authors": ["Yu, R.", "Liu, H.", "Ran, Y.", "Gu, F."],
+      "bib_authors": "Yu, Ruifeng and Liu, Hongli and Ran, Yuyang and Gu, Feng",
+      "year": "2025",
+      "date": "2025-06",
+      "date_label": "June 2025",
+      "journal": "Cortex",
+      "volume": "187",
+      "pages": "52–73",
+      "doi": "10.1016/j.cortex.2025.04.003"
+    }
+  ],
+  "education": [
+    {"title": "M.A. in Linguistics and Applied Linguistics", "institution": "Sichuan University", "dates": "September 2023 – June 2026"},
+    {"title": "B.A. in Chinese Language and Literature", "institution": "Sichuan University", "dates": "September 2019 – June 2023"}
+  ],
+  "research": [
+    {
+      "title": "Coercion and predictability in Mandarin",
+      "context": "Master’s dissertation · Sichuan University",
+      "text": "I investigate coercion in Mandarin adverb–noun constructions, bringing together EEG, behavioral norms, and computational measures of predictability.",
+      "contributions": ["Designed the EEG experiment and stimuli, recruited 60 participants, and conducted EEG data collection.", "Collected completion norms and semantic ratings, computed LLM surprisal, and modeled trial-level EEG responses using regression-based ERP estimation (rERP)."],
+      "methods": "EEG · Completion norms · LLM surprisal · rERP"
+    },
+    {
+      "title": "Object size and semantic processing",
+      "context": "Collaborative project · October 2023–April 2025",
+      "text": "This project examined cognitive and neural differences in processing words referring to small and large objects.",
+      "contributions": ["Recruited 228 participants across the behavioral and EEG experiments and organized subjective semantic ratings.", "Preprocessed EEG data in MATLAB and contributed to multivariate pattern analysis using MVPA-Light."],
+      "methods": "Behavioral experiments · EEG preprocessing · MVPA",
+      "doi": "10.1016/j.cortex.2025.04.003"
+    },
+    {
+      "title": "Orthographic processing and the ND250",
+      "context": "Collaborative project · September 2023–April 2025",
+      "text": "This project investigated the functional interpretation of the ND250 response by comparing handwritten and printed words.",
+      "contributions": ["Contributed to the 2 × 2 experimental design, prepared 300 stimuli, and independently conducted the EEG experiment after recruiting 30 participants.", "Performed univariate ND250 analyses and exploratory mass-univariate analyses with false discovery rate correction."],
+      "methods": "Experimental design · EEG/ERP · Mass-univariate analysis",
+      "doi": "10.1016/j.jneuroling.2025.101249"
+    }
+  ],
+  "earlier_research": [
+    {"title": "Word-class conversion in Mashi Wentong", "dates": "September 2022–June 2023", "text": "Analyzed grammatical categories and the jia jie (category borrowing) framework in Mashi Wentong, supervised by Dr. Tao Wang."},
+    {"title": "Regional variation in Mandarin erhua", "dates": "September 2022–April 2023", "text": "Classified over 2,900 dictionary entries and organized dialect data in an Excel database, supervised by Prof. Chunhui Liu."}
+  ],
+  "skills": [
+    {"label": "Experiments", "text": "EEG/ERP, behavioral experiments, E-prime; basic eye-tracking"},
+    {"label": "Analysis", "text": "MATLAB, R, Python, SPSS"}
+  ],
+  "presentation": {
+    "title": "Coercion or Predictability? Evidence from Mandarin Adverb–Nominal Degree Constructions.",
+    "type": "Conference poster",
+    "year": "2026",
+    "venue": "International Symposium on Language Science (ISLS)",
+    "theme": "Interdisciplinary Research and the Legacy of Yuen Ren Chao"
+  },
+  "honors": [
+    {"title": "National Scholarship", "years": "2025"},
+    {"title": "Outstanding Graduate of Sichuan University", "years": "2025"},
+    {"title": "Outstanding Graduate Student of Sichuan University", "years": "2023–2024"},
+    {"title": "Outstanding Graduate Student Leader, College of Literature and Journalism", "years": "2023–2024, 2024–2025"},
+    {"title": "Outstanding Teaching Assistant of Sichuan University", "years": "2024"},
+    {"title": "Outstanding Student", "years": "2024", "detail": "The Sixth Summer School on Applied Linguistics and Cognitive Neuroscience, Jinan University"}
+  ],
+  "materials": [
+    {
+      "id": "eeg-handbook",
+      "title": "EEG/ERP Preprocessing Manual",
+      "subtitle": "A practical workflow using EEGLAB and ERPLAB",
+      "description": "My practical notes on EEG/ERP preprocessing, including bad-channel and artifact identification, ICA component assessment, and ICA-weight transfer between processing branches.",
+      "file": "materials/EEG_Preprocessing_Handbook.pdf",
+      "language": "English",
+      "pages": 23,
+      "date": "2026-08-13",
+      "date_label": "August 13, 2026",
+      "note": "Personal research notes, not an official software manual. The batch-processing script mentioned as Attachment 2 is not included in this PDF."
+    }
+  ]
+}
