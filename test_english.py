@@ -52,6 +52,9 @@ class EnglishHomepage(unittest.TestCase):
         self.assertNotIn('data-prev',html)
         self.assertNotIn('data-next',html)
         self.assertNotIn('page-controls',html)
+        self.assertIn('assets/main.css?v='+DATA['asset_version'],html)
+        self.assertIn('assets/main.js?v='+DATA['asset_version'],html)
+        self.assertIn('assets/handbook-cover.png?v='+DATA['asset_version'],html)
         self.assertIn('hiking, running, working out, and playing badminton', html)
 
     def test_publications_and_presentation_together(self):

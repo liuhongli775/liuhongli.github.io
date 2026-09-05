@@ -31,6 +31,8 @@ python test_english.py
 
 The build and integrity tests use the Python standard library only.
 
+When publishing changes to CSS, JavaScript, or the handbook cover, update `asset_version` in `site.json`. The generated versioned URLs prevent browsers from keeping an obsolete interface after deployment.
+
 | File | Purpose |
 | --- | --- |
 | `site.json` | Profile, research, publications, presentations, honors, and resources |

@@ -63,6 +63,7 @@ def heading(index, subtitle, extra=''):
 
 def render():
     d, role = DATA, DATA['position']
+    asset_version = e(d['asset_version'])
     supervisor = f'<a href="{e(role["supervisor_url"])}" target="_blank" rel="noopener noreferrer">Dr. {e(role["supervisor"])}</a>'
     education = []
     for index, p in enumerate(d['education']):
@@ -88,7 +89,7 @@ def render():
             raise FileNotFoundError(f'Missing material: {asset}')
         size = f'{asset.stat().st_size / (1024 * 1024):.1f} MB'
         materials.append(f'''<article class="material" id="{e(m['id'])}">
-          <a class="material-cover" href="./{e(m['file'])}" target="_blank" rel="noopener noreferrer"><img src="./assets/handbook-cover.png" alt="Cover of the EEG/ERP Preprocessing Manual" width="560" height="792"></a>
+          <a class="material-cover" href="./{e(m['file'])}" target="_blank" rel="noopener noreferrer"><img src="./assets/handbook-cover.png?v={asset_version}" alt="Cover of the EEG/ERP Preprocessing Manual" width="560" height="792"></a>
           <div class="material-body"><p class="eyebrow">Research notes / EEG &amp; ERP</p>
             <h3><a href="./{e(m['file'])}" target="_blank" rel="noopener noreferrer">{e(m['title'])}</a></h3>
             <p class="material-subtitle">{e(m['subtitle'])}</p><p class="material-description">{e(m['description'])}</p>
@@ -115,8 +116,8 @@ def render():
   <link rel="canonical" href="{e(d['url'])}/"><meta property="og:type" content="profile">
   <meta property="og:title" content="Hongli Liu | Language &amp; Cognition"><meta property="og:description" content="{e(description)}">
   <meta property="og:url" content="{e(d['url'])}/"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary">
-  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg"><link rel="stylesheet" href="./assets/main.css">
-  <script defer src="./assets/main.js"></script><script type="application/ld+json">{structured}</script>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg?v={asset_version}"><link rel="stylesheet" href="./assets/main.css?v={asset_version}">
+  <script defer src="./assets/main.js?v={asset_version}"></script><script type="application/ld+json">{structured}</script>
 </head>
 <body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
