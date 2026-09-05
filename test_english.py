@@ -48,7 +48,7 @@ class EnglishHomepage(unittest.TestCase):
         self.assertEqual(sum(tag=='main' for tag,_ in page.tags),1)
         self.assertEqual(sum(tag=='section' for tag,_ in page.tags),5)
         self.assertEqual([attrs['id'] for tag,attrs in page.tags if tag=='section'], ['background','publications','honors','materials','beyond'])
-        self.assertEqual(html.count('data-page-turn='),2)
+        self.assertNotIn('data-page-turn=',html)
         self.assertNotIn('data-prev',html)
         self.assertNotIn('data-next',html)
         self.assertNotIn('page-controls',html)

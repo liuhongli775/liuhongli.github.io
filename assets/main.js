@@ -4,7 +4,6 @@ const root = document.documentElement;
 const main = document.querySelector('#main');
 const pages = [...document.querySelectorAll('.folio-page')];
 const navLinks = [...document.querySelectorAll('.section-nav a')];
-const edgeTurns = [...document.querySelectorAll('[data-page-turn]')];
 const viewToggle = document.querySelector('[data-view-toggle]');
 const pageStatus = document.querySelector('.page-status');
 const wide = matchMedia('(min-width: 960px) and (min-height: 620px)');
@@ -16,7 +15,7 @@ let isPaged = false;
 function updateReadingHint() {
   const page = pages[current];
   const moreBelow = isPaged && page.scrollHeight - page.clientHeight - page.scrollTop > 15;
-  document.querySelector('.keyboard-hint').textContent = moreBelow ? 'Scroll to read more ↓' : 'Click the page edges to turn';
+  document.querySelector('.keyboard-hint').textContent = moreBelow ? 'Scroll to read more ↓' : 'Click the left or right half of the page to turn';
 }
 
 function hashTarget() {
@@ -28,10 +27,6 @@ function updateNavigation() {
   navLinks.forEach((link, i) => {
     if (i === current) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
-  });
-  edgeTurns.forEach(button => {
-    const direction = Number(button.dataset.pageTurn);
-    button.disabled = current + direction < 0 || current + direction >= pages.length;
   });
   pageStatus.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(pages.length).padStart(2,'0');
   pageStatus.setAttribute('aria-label', 'Page ' + (current + 1) + ' of ' + pages.length + ': ' + pages[current].querySelector('h2').textContent);
@@ -87,9 +82,14 @@ navLinks.forEach((link, i) => link.addEventListener('click', event => {
   event.preventDefault();
   goTo(i, {push:true,focus:isPaged,reset:true});
 }));
-edgeTurns.forEach(button => button.addEventListener('click', () => {
-  goTo(current + Number(button.dataset.pageTurn), {push:true,focus:true,reset:true});
-}));
+main.addEventListener('click', event => {
+  if (!isPaged || event.button !== 0 || event.defaultPrevented) return;
+  if (event.target.closest('a,button,summary,input,textarea,select,pre,code,[contenteditable="true"]')) return;
+  if (window.getSelection()?.type === 'Range') return;
+  const rect = pages[current].getBoundingClientRect();
+  const direction = event.clientX < rect.left + rect.width / 2 ? -1 : 1;
+  goTo(current + direction, {push:true,focus:true,reset:true});
+});
 viewToggle.addEventListener('click', () => {
   continuous = !continuous;
   syncMode(true);
