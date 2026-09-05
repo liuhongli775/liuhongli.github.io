@@ -4,8 +4,7 @@ const root = document.documentElement;
 const main = document.querySelector('#main');
 const pages = [...document.querySelectorAll('.folio-page')];
 const navLinks = [...document.querySelectorAll('.section-nav a')];
-const previous = document.querySelector('[data-prev]');
-const next = document.querySelector('[data-next]');
+const edgeTurns = [...document.querySelectorAll('[data-page-turn]')];
 const viewToggle = document.querySelector('[data-view-toggle]');
 const pageStatus = document.querySelector('.page-status');
 const wide = matchMedia('(min-width: 960px) and (min-height: 620px)');
@@ -17,7 +16,7 @@ let isPaged = false;
 function updateReadingHint() {
   const page = pages[current];
   const moreBelow = isPaged && page.scrollHeight - page.clientHeight - page.scrollTop > 15;
-  document.querySelector('.keyboard-hint').textContent = moreBelow ? 'Scroll to read more ↓' : 'Use ← → to turn pages';
+  document.querySelector('.keyboard-hint').textContent = moreBelow ? 'Scroll to read more ↓' : 'Click the page edges to turn';
 }
 
 function hashTarget() {
@@ -30,8 +29,10 @@ function updateNavigation() {
     if (i === current) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
-  previous.disabled = current === 0;
-  next.disabled = current === pages.length - 1;
+  edgeTurns.forEach(button => {
+    const direction = Number(button.dataset.pageTurn);
+    button.disabled = current + direction < 0 || current + direction >= pages.length;
+  });
   pageStatus.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(pages.length).padStart(2,'0');
   pageStatus.setAttribute('aria-label', 'Page ' + (current + 1) + ' of ' + pages.length + ': ' + pages[current].querySelector('h2').textContent);
   updateReadingHint();
@@ -86,8 +87,9 @@ navLinks.forEach((link, i) => link.addEventListener('click', event => {
   event.preventDefault();
   goTo(i, {push:true,focus:isPaged,reset:true});
 }));
-previous.addEventListener('click', () => goTo(current - 1,{push:true,focus:true,reset:true}));
-next.addEventListener('click', () => goTo(current + 1,{push:true,focus:true,reset:true}));
+edgeTurns.forEach(button => button.addEventListener('click', () => {
+  goTo(current + Number(button.dataset.pageTurn), {push:true,focus:true,reset:true});
+}));
 viewToggle.addEventListener('click', () => {
   continuous = !continuous;
   syncMode(true);

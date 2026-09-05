@@ -8,7 +8,7 @@ Built as a static, English-only site for GitHub Pages. No framework, external fo
 
 ## Reading the site
 
-- Desktop: five horizontally transitioning pages with a fixed profile and contents rail. Navigate using the directory, page buttons, or left/right arrow keys.
+- Desktop: five horizontally transitioning pages with a fixed profile and contents rail. Navigate using the directory, the subtle click areas at the left and right page edges, or left/right arrow keys.
 - Long pages scroll vertically; the footer indicates when more content is available below.
 - Continuous view provides a single scrolling document. Narrow screens, short windows, and browsers without JavaScript use this mode automatically.
 - Section links, browser Back/Forward, and reload preserve the selected page.

@@ -32,11 +32,11 @@ button:disabled { cursor: default; opacity: .4; }
 .rail-bottom { margin-top: auto; }
 .rail-bottom > p:not(.eyebrow) { color: var(--muted); font-size: 11px; line-height: 1.9; margin-top: 10px; }
 .rail-year { display: block; color: var(--muted); font-size: 10px; margin-top: 28px; }
-.folio-workspace { min-width: 0; }
+.folio-workspace { min-width: 0; position: relative; }
 .folio-toolbar { min-height: 57px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 40px; border-bottom: 1px solid var(--rule); font-size: 11px; color: var(--muted); }
 .toolbar-slash { margin-inline: 9px; color: var(--accent); }
 .view-toggle { padding: 4px 0; color: var(--accent); border: 0; background: transparent; font-size: 11px; }
-.js-only, .page-controls, .print-contact { display: none; }
+.js-only, .page-indicator, .print-contact { display: none; }
 .js .js-only { display: inline-block; }
 #main:focus { outline: none; }
 .folio-page { min-width: 0; padding: 38px 42px 48px; scroll-margin-top: 20px; }
@@ -134,10 +134,16 @@ button:disabled { cursor: default; opacity: .4; }
 .landscape span { display: block; color: var(--muted); font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; text-align: center; margin-top: 13px; }
 .folio-footer { display: flex; justify-content: space-between; align-items: center; gap: 15px; min-height: 62px; padding: 14px 40px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 10px; }
 .print-button { border: 0; padding: 4px 0; color: var(--muted); background: transparent; font-size: 10px; }
-.page-controls { align-items: center; gap: 14px; }
-.page-controls button { width: 32px; height: 32px; background: transparent; border: 1px solid var(--rule); color: var(--ink); font-size: 17px; line-height: 1; }
+.page-indicator { align-items: center; gap: 17px; }
 .page-status { font-variant-numeric: tabular-nums; font-size: 11px; color: var(--ink); }
-.keyboard-hint { font-size: 9px; color: var(--muted); margin-left: 6px; }
+.keyboard-hint { font-size: 9px; color: var(--muted); }
+.edge-turn { display: none !important; position: absolute; z-index: 5; top: 57px; bottom: 62px; width: 46px; padding: 0; border: 0; background: transparent; color: var(--accent); opacity: 0; transition: opacity 160ms ease, background 160ms ease; }
+.edge-turn span { display: grid; place-items: center; width: 28px; height: 48px; margin: auto; background: rgba(255,255,255,.88); font-size: 20px; }
+.edge-prev { left: 0; }
+.edge-next { right: 0; }
+.edge-turn:hover, .edge-turn:focus-visible { opacity: 1; background: linear-gradient(to right,rgba(237,242,248,.7),transparent); }
+.edge-next:hover, .edge-next:focus-visible { background: linear-gradient(to left,rgba(237,242,248,.7),transparent); }
+.edge-turn:disabled { opacity: 0; pointer-events: none; }
 @media (min-width: 960px) and (min-height: 620px) {
   .paged body { overflow: hidden; }
   .paged .academic-folio { height: calc(100dvh - 48px); }
@@ -147,7 +153,8 @@ button:disabled { cursor: default; opacity: .4; }
   .paged .page-track { display: flex; height: 100%; transform: translateX(calc(var(--page-index,0) * -100%)); transition: transform 340ms cubic-bezier(.22,.68,0,1); }
   .paged .folio-page { flex: 0 0 100%; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #b3c1d1 transparent; scroll-margin-top: 0; overscroll-behavior-y: contain; }
   .paged .folio-page + .folio-page { border-top: 0; }
-  .paged .page-controls { display: flex; }
+  .paged .page-indicator { display: flex; }
+  .paged .edge-turn { display: grid !important; }
 }
 @media (min-width: 960px) and (max-width: 1199px) {
   .academic-folio { grid-template-columns: 212px minmax(0,1fr); }
@@ -233,7 +240,7 @@ button:disabled { cursor: default; opacity: .4; }
   .profile-top h1 { font-size: 32pt; }
   .role-line br { display: none; }
   .print-contact { display: block; font-size: 9pt; margin-top: 9px; }
-  .section-nav, .contact-links, .rail-bottom, .folio-toolbar, .folio-footer, .pub-links, .download-bib, .material-links, .material-note, .landscape, .skip-link { display: none !important; }
+  .section-nav, .contact-links, .rail-bottom, .folio-toolbar, .folio-footer, .edge-turn, .pub-links, .download-bib, .material-links, .material-note, .landscape, .skip-link { display: none !important; }
   .folio-workspace, .paged .folio-workspace, #main, .paged #main { display: block; height: auto; overflow: visible; }
   .page-track, .paged .page-track { display: block; height: auto; transform: none !important; transition: none; }
   .folio-page, .paged .folio-page { display: block; width: 100%; height: auto; overflow: visible; padding: 20px 0; border: 0; }
