@@ -2,61 +2,61 @@
 
 [Visit the website](https://liuhongli775.github.io/)
 
-Personal academic website for Hongli Liu, featuring research in language and cognition, publications and presentations, academic background, honors, and EEG/ERP resources.
+English academic homepage for Hongli Liu, Research Assistant at The Hong Kong Polytechnic University. The site presents academic background, publications and presentations, research experience, honors, EEG/ERP materials, and interests outside research.
 
-Built as a static, English-only site for GitHub Pages. No framework, external fonts, analytics, or API keys are required.
+The layout is inspired by the information hierarchy of a traditional university faculty page: a clear name-and-role header, a compact navigation and contact sidebar, and one continuous reading column. It uses its own cool navy visual system and does not reproduce institutional branding from the reference.
 
-## Reading the site
+## Features
 
-- Desktop: five horizontally transitioning pages with a fixed profile and contents rail. Click the left half of the page to go back or the right half to advance; links and text selection remain interactive. The directory and left/right arrow keys also work.
-- Long pages scroll vertically; the footer indicates when more content is available below.
-- Continuous view provides a single scrolling document. Narrow screens, short windows, and browsers without JavaScript use this mode automatically.
-- Section links, browser Back/Forward, and reload preserve the selected page.
-- Reduced-motion preferences are respected. Print / Save as PDF includes every section.
+- Continuous desktop and mobile reading; no slide or page-turn interaction
+- Background first, followed by publications and presentations in reverse chronological order
+- Three detailed research projects and two earlier linguistics projects
+- Complete honors list
+- Downloadable BibTeX and EEG/ERP manual
+- Responsive navigation, print styles, reduced-motion support, and keyboard-accessible disclosures
+- No framework, external fonts, analytics, trackers, or API keys
 
 ## Development
 
-Open `index.html` directly, or serve this directory locally:
+Open `index.html` directly, or serve the repository locally:
 
 ```sh
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Edit `site.json` to update content, then rebuild and check:
+Edit `site.json`, then rebuild and check:
 
 ```sh
 python site.py
 python test_english.py
 ```
 
-The build and integrity tests use the Python standard library only.
+The builder and integrity tests use the Python standard library only. When changing CSS, JavaScript, or images, update `asset_version` in `site.json` so visitors receive the current assets after deployment.
 
-When publishing changes to CSS, JavaScript, or the handbook cover, update `asset_version` in `site.json`. The generated versioned URLs prevent browsers from keeping an obsolete interface after deployment.
+## Main files
 
 | File | Purpose |
 | --- | --- |
-| `site.json` | Profile, research, publications, presentations, honors, and resources |
+| `site.json` | Profile, research, publications, honors, images, and materials |
 | `site.py` | Static HTML and bibliography builder |
 | `assets/main.css` | Responsive and print styles |
-| `assets/main.js` | Paging, reading modes, navigation, and citation copying |
+| `assets/main.js` | Section navigation, citation copying, and printing |
+| `assets/profile.jpg` | Profile portrait |
+| `assets/outdoors.jpg` | Beyond Research photograph |
 | `publications.bib` | Downloadable journal-article citations |
 | `materials/` | Downloadable research resources |
-| `test_english.py` | Content, structure, and local-link checks |
+| `test_english.py` | Content, structure, privacy, and local-link checks |
 
-Research outputs are sorted newest first. Journal article dates refer to issue months; conference entries retain only the date precision supplied. The bibliography includes journal articles, not the conference poster.
+## Images and privacy
 
-## Deployment
+The two displayed photographs were selected from images supplied by the site owner. They are copied without generative alteration. Both selected JPEGs contained no EXIF entries, GPS data, embedded comments, or ICC profiles when reviewed.
 
-The generated HTML, assets, bibliography, and resources are served from the repository root. Commit generated files alongside changes to the source data.
+The original CV, local reference library, and participant datasets are not included. Contact links on the site are public. Review privacy, permissions, and lab data-sharing requirements before adding future downloadable resources.
 
-See [GitHub Pages publishing documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site). Preserve the repository's existing Pages configuration.
-
-The historical `/zh/index.html` address redirects to the English homepage.
-
-## Research resources
+## Research resource
 
 The EEG/ERP Preprocessing Manual is a set of personal research notes, not an official EEGLAB or ERPLAB manual. The downloadable PDF is unchanged from the supplied version; the cover thumbnail is rendered from its first page. The batch-processing script referred to as Attachment 2 is not included.
 
-References and third-party screenshots remain attributed in the document. No blanket licence is granted to third-party material.
+## Deployment
 
-The original CV, local reference library, and participant datasets are not included. Contact links are public. Review privacy, permissions, and lab data-sharing requirements before adding further downloadable resources.
+The generated site is served from the repository root through GitHub Pages. The historical `/zh/index.html` address redirects to the English homepage. Preserve the existing Pages configuration when updating the repository.

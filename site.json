@@ -3,8 +3,12 @@
   "email": "15082195267@163.com",
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
-  "updated": "2026-09-03",
-  "asset_version": "20260905-page-click",
+  "updated": "2026-09-08",
+  "asset_version": "20260908-classic-academic",
+  "images": {
+    "profile": {"file": "assets/profile.jpg", "alt": "Portrait of Hongli Liu outdoors"},
+    "outdoors": {"file": "assets/outdoors.jpg", "alt": "Hongli Liu beside a mountain lake"}
+  },
   "personal": {
     "heading": "Beyond Research",
     "text": "Outside research, I enjoy hiking, running, working out, and playing badminton.",
