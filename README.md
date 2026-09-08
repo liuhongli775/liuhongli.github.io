@@ -4,7 +4,7 @@
 
 English academic homepage for Hongli Liu, Research Assistant at The Hong Kong Polytechnic University. The site presents academic background, publications and presentations, research experience, honors, EEG/ERP materials, and interests outside research.
 
-The layout is inspired by the information hierarchy of a traditional university faculty page: a clear name-and-role header, a compact navigation and contact sidebar, and one continuous reading column. It uses its own cool navy visual system and does not reproduce institutional branding from the reference.
+
 
 
 
