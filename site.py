@@ -13,6 +13,7 @@ SECTIONS = [
     ("honors", "Honors"),
     ("materials", "Materials"),
     ("beyond", "Beyond Research"),
+    ("message", "Leave a Message"),
 ]
 
 
@@ -95,7 +96,7 @@ def render():
         advisor = '<p>Supervisor: Dr. Feng Gu</p>' if index == 0 else ""
         education.append(
             f'''<article class="education-item"><p class="dates">{e(item['dates'])}</p>
-              <div><h4>{e(item['title'])}</h4><p>{e(item['institution'])}</p>{advisor}</div></article>'''
+              <div><h4>{e(item['title'])}</h4><p><a href="{e(item['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(item['institution'])}</a></p>{advisor}</div></article>'''
         )
 
     research = []
@@ -206,7 +207,7 @@ def render():
         <h2 id="background-heading">About</h2>
         <div class="about-grid">
           <div class="about-copy"><p class="lead">{e(d['about'])}</p>
-            <p>I am currently a <strong>{e(role['title'])}</strong> at <a href="{e(role['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(role['institution'])}</a>, supervised by {supervisor}. I received my M.A. and B.A. from Sichuan University.</p>
+            <p>I am currently a <strong>{e(role['title'])}</strong> at <a href="{e(role['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(role['institution'])}</a>, supervised by {supervisor}. I received my M.A. and B.A. from <a href="https://en.scu.edu.cn/" target="_blank" rel="noopener noreferrer">Sichuan University</a>.</p>
             <h3>Research interests</h3><ul class="interest-list">{interests}</ul>
           </div>
           <figure class="profile-photo"><img src="./{e(profile['file'])}?v={asset_version}" alt="{e(profile['alt'])}" width="1280" height="1703"></figure>
@@ -239,6 +240,18 @@ def render():
         <h2 id="beyond-heading">{e(d['personal']['heading'])}</h2>
         <div class="beyond-intro"><p class="beyond-copy">{e(d['personal']['text'])}</p><ul class="hobby-list">{hobby_items}</ul></div>
         <div class="activity-gallery">{activity_gallery}</div>
+      </section>
+
+      <section class="content-section message-section" id="message" aria-labelledby="message-heading">
+        <h2 id="message-heading">{e(d['message']['heading'])}</h2>
+        <p class="message-intro">{e(d['message']['text'])}</p>
+        <form class="message-form" data-message-form data-recipient="{e(d['email'])}" action="mailto:{e(d['email'])}?subject=Message%20from%20your%20academic%20homepage" method="post" enctype="text/plain">
+          <div class="form-grid"><label>Name<input type="text" name="name" autocomplete="name" required maxlength="100"></label>
+            <label>Email<input type="email" name="email" autocomplete="email" required maxlength="254"></label></div>
+          <label>Message<textarea name="message" rows="7" required maxlength="2000"></textarea></label>
+          <div class="form-actions"><button type="submit">Open email to send</button><p>Submitting opens your email application. This website does not store your message.</p></div>
+          <p class="message-status" data-message-status role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
   </div>

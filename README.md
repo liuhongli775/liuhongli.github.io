@@ -35,7 +35,7 @@ The builder and integrity tests use the Python standard library only. When chang
 | `assets/main.js` | Section navigation, citation copying, and printing |
 | `assets/profile.jpg` | Profile portrait |
 | `assets/outdoors.jpg` | Beyond Research photograph |
-| `assets/hiking-1.jpg`, `assets/hiking-2.jpg` | Beyond Research hiking photographs |
+| `assets/hiking-1.jpg`, `assets/daily.jpg` | Beyond Research hiking and daily-life photographs |
 | `publications.bib` | Downloadable journal-article citations |
 | `materials/` | Downloadable research resources |
 | `test_english.py` | Content, structure, privacy, and local-link checks |

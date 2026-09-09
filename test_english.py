@@ -45,7 +45,7 @@ class EnglishHomepage(unittest.TestCase):
         self.assertEqual(sum(tag == "main" for tag, _ in page.tags), 1)
         self.assertEqual(
             [attrs["id"] for tag, attrs in page.tags if tag == "section"],
-            ["background", "publications", "research", "honors", "materials", "beyond"],
+            ["background", "publications", "research", "honors", "materials", "beyond", "message"],
         )
         for obsolete in ["page-track", "folio-page", "page-indicator", "data-page-turn", "data-view-toggle"]:
             self.assertNotIn(obsolete, html)
@@ -71,6 +71,7 @@ class EnglishHomepage(unittest.TestCase):
         for item in DATA["images"]["activities"]:
             self.assertIn(escape(item["alt"]), html)
         self.assertEqual(html.count('class="activity-photo"'), 3)
+        self.assertFalse((ROOT / "assets/hiking-2.jpg").exists())
 
     def test_local_links(self):
         for file in [ROOT / "index.html", ROOT / "zh/index.html"]:
@@ -100,7 +101,8 @@ class EnglishHomepage(unittest.TestCase):
             self.assertIn(value, html)
         self.assertIn("hongli.liu@polyu.edu.hk", html)
         self.assertIn("incrementally processes language", html)
-        self.assertIn("I received my M.A. and B.A. from Sichuan University.", html)
+        self.assertIn("I received my M.A. and B.A. from ", html)
+        self.assertGreaterEqual(html.count('href="https://en.scu.edu.cn/"'), 3)
         self.assertEqual(html.count('class="research-project"'), 3)
         for item in DATA["research"]:
             self.assertIn(escape(item["title"]), html)
@@ -127,6 +129,17 @@ class EnglishHomepage(unittest.TestCase):
         self.assertIn("hiking, running, working out, and playing badminton", html)
         for resource in DATA["materials"]:
             self.assertTrue((ROOT / resource["file"]).read_bytes().startswith(b"%PDF-"))
+
+    def test_message_form(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="message"', html)
+        self.assertIn('data-message-form', html)
+        self.assertIn('data-recipient="hongli.liu@polyu.edu.hk"', html)
+        self.assertIn('action="mailto:hongli.liu@polyu.edu.hk?', html)
+        self.assertIn('name="name"', html)
+        self.assertIn('name="email"', html)
+        self.assertIn('name="message"', html)
+        self.assertIn("This website does not store your message.", html)
 
     def test_bibliography(self):
         bib = (ROOT / "publications.bib").read_text(encoding="utf-8")

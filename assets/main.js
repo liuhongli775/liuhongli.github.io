@@ -27,6 +27,21 @@ document.querySelectorAll('[data-copy]').forEach(button => {
 
 document.querySelector('[data-print]').addEventListener('click', () => window.print());
 
+const messageForm = document.querySelector('[data-message-form]');
+if (messageForm) {
+  messageForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(messageForm);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const subject = `Website message from ${name}`;
+    const body = `Name: ${name}\nReply-to: ${email}\n\n${message}`;
+    document.querySelector('[data-message-status]').textContent = 'Opening your email application…';
+    window.location.href = `mailto:${messageForm.dataset.recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+}
+
 const navLinks = [...document.querySelectorAll('.section-nav a')];
 function selectSection(id) {
   navLinks.forEach(link => {

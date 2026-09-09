@@ -4,19 +4,23 @@
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
   "updated": "2026-09-09",
-  "asset_version": "20260909-sports-email",
+  "asset_version": "20260909-gallery-message",
   "images": {
     "profile": {"file": "assets/profile.jpg", "alt": "Portrait of Hongli Liu outdoors"},
     "activities": [
       {"file": "assets/outdoors.jpg", "alt": "Hongli Liu beside a mountain lake", "label": "Hiking and travel", "width": 640, "height": 854},
       {"file": "assets/hiking-1.jpg", "alt": "Hongli Liu hiking on a wooded trail", "label": "Hiking", "width": 1279, "height": 1706},
-      {"file": "assets/hiking-2.jpg", "alt": "Hongli Liu walking along a wooded trail", "label": "On the trail", "width": 1279, "height": 1706}
+      {"file": "assets/daily.jpg", "alt": "Hongli Liu seated by a window", "label": "Everyday moments", "width": 1707, "height": 1280}
     ]
   },
   "personal": {
     "heading": "Beyond Research",
     "text": "Outside research, I enjoy hiking, running, working out, and playing badminton.",
     "hobbies": ["Hiking", "Running", "Fitness", "Badminton"]
+  },
+  "message": {
+    "heading": "Leave a Message",
+    "text": "If you would like to discuss research, ask a question, or simply say hello, feel free to send me a message."
   },
   "position": {
     "title": "Research Assistant",
@@ -59,8 +63,8 @@
     }
   ],
   "education": [
-    {"title": "M.A. in Linguistics and Applied Linguistics", "institution": "Sichuan University", "dates": "September 2023 – June 2026"},
-    {"title": "B.A. in Chinese Language and Literature", "institution": "Sichuan University", "dates": "September 2019 – June 2023"}
+    {"title": "M.A. in Linguistics and Applied Linguistics", "institution": "Sichuan University", "institution_url": "https://en.scu.edu.cn/", "dates": "September 2023 – June 2026"},
+    {"title": "B.A. in Chinese Language and Literature", "institution": "Sichuan University", "institution_url": "https://en.scu.edu.cn/", "dates": "September 2019 – June 2023"}
   ],
   "research": [
     {
