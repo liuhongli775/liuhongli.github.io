@@ -50,3 +50,5 @@ The EEG/ERP Preprocessing Manual is a set of personal research notes, not an off
 The generated site is served from the repository root through GitHub Pages. The historical `/zh/index.html` address redirects to the English homepage. Preserve the existing Pages configuration when updating the repository.
 
 The anonymous message form uses FormSubmit to forward message text to the public PolyU contact address. It requests no visitor name or email. FormSubmit processes submissions and requires one-time activation for the receiving address.
+
+With JavaScript enabled, each main section is shown as one page. Clicking any non-interactive area advances to the next section; links, forms, disclosures, code blocks, and text selection remain interactive. The final page loops back to Background. The sidebar and arrow/Page Up/Page Down keys provide direct and backward navigation. Without JavaScript, the complete page remains continuously readable.

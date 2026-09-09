@@ -47,8 +47,16 @@ class EnglishHomepage(unittest.TestCase):
             [attrs["id"] for tag, attrs in page.tags if tag == "section"],
             ["background", "publications", "research", "honors", "materials", "beyond", "message"],
         )
-        for obsolete in ["page-track", "folio-page", "page-indicator", "data-page-turn", "data-view-toggle"]:
+        for obsolete in ["page-track", "folio-page", "page-indicator", "data-page-turn", "data-view-toggle", "translateX"]:
             self.assertNotIn(obsolete, html)
+        self.assertIn('data-page-status', html)
+        self.assertIn('data-page-hint', html)
+        script = (ROOT / "assets/main.js").read_text(encoding="utf-8")
+        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
+        self.assertIn("main.addEventListener('click'", script)
+        self.assertIn("showPage(current + 1", script)
+        self.assertIn(".paged-site main", css)
+        self.assertNotIn("translateX", script + css)
         self.assertNotIn("<svg", html)
         self.assertIn("assets/profile.jpg?v=" + DATA["asset_version"], html)
         for image in DATA["images"]["activities"]:

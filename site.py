@@ -198,6 +198,7 @@ def render():
   <div class="site-width site-layout">
     <aside class="sidebar">
       <nav class="section-nav" aria-label="Main navigation">{nav}</nav>
+      <div class="page-progress js-only" aria-label="Page navigation"><strong data-page-status>01 / 07</strong><span data-page-hint>Click anywhere on the page to continue</span></div>
       <div class="sidebar-block"><h2>Contact</h2><p><a href="mailto:{e(d['email'])}">{e(d['email'])}</a></p><p><a href="{e(d['github'])}" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a></p></div>
       <div class="sidebar-block"><h2>Research interests</h2><ul>{interests}</ul></div>
       <div class="sidebar-block"><h2>Methods &amp; tools</h2><dl>{skill_rows}</dl></div>
