@@ -1,13 +1,17 @@
 {
   "name": "Hongli Liu",
-  "email": "15082195267@163.com",
+  "email": "hongli.liu@polyu.edu.hk",
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
-  "updated": "2026-09-08",
-  "asset_version": "20260908-classic-academic",
+  "updated": "2026-09-09",
+  "asset_version": "20260909-sports-email",
   "images": {
     "profile": {"file": "assets/profile.jpg", "alt": "Portrait of Hongli Liu outdoors"},
-    "outdoors": {"file": "assets/outdoors.jpg", "alt": "Hongli Liu beside a mountain lake"}
+    "activities": [
+      {"file": "assets/outdoors.jpg", "alt": "Hongli Liu beside a mountain lake", "label": "Hiking and travel", "width": 640, "height": 854},
+      {"file": "assets/hiking-1.jpg", "alt": "Hongli Liu hiking on a wooded trail", "label": "Hiking", "width": 1279, "height": 1706},
+      {"file": "assets/hiking-2.jpg", "alt": "Hongli Liu walking along a wooded trail", "label": "On the trail", "width": 1279, "height": 1706}
+    ]
   },
   "personal": {
     "heading": "Beyond Research",
@@ -23,7 +27,7 @@
     "start": "2026-08-10",
     "date_label": "August 10, 2026 – present"
   },
-  "about": "I am interested in how people recognize written words and build meaning in context. My research combines behavioral experiments, EEG/ERP methods, and computational measures of language predictability.",
+  "about": "I am interested in how the human brain incrementally processes language, especially how different sources of linguistic information—such as syntax and semantics—are represented and interact in the mind. To investigate these questions, my research combines behavioral experiments, EEG/ERP methods, and computational measures derived from language models, such as surprisal.",
   "background": "My academic background is in Linguistics and Applied Linguistics at Sichuan University, where my master’s research was supervised by Dr. Feng Gu.",
   "interests": ["Sentence comprehension", "Visual word recognition", "Semantic processing", "Large language models"],
   "publications": [

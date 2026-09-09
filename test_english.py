@@ -51,7 +51,8 @@ class EnglishHomepage(unittest.TestCase):
             self.assertNotIn(obsolete, html)
         self.assertNotIn("<svg", html)
         self.assertIn("assets/profile.jpg?v=" + DATA["asset_version"], html)
-        self.assertIn("assets/outdoors.jpg?v=" + DATA["asset_version"], html)
+        for image in DATA["images"]["activities"]:
+            self.assertIn(image["file"] + "?v=" + DATA["asset_version"], html)
         self.assertIn("assets/main.css?v=" + DATA["asset_version"], html)
         self.assertIn("assets/main.js?v=" + DATA["asset_version"], html)
 
@@ -59,14 +60,17 @@ class EnglishHomepage(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         parser = Parser(ROOT / "index.html")
         images = [attrs for tag, attrs in parser.tags if tag == "img"]
-        self.assertEqual(len(images), 3)
+        self.assertEqual(len(images), 5)
         self.assertTrue(all(image.get("alt", "").strip() for image in images))
-        for item in DATA["images"].values():
+        expected_images = [DATA["images"]["profile"], *DATA["images"]["activities"]]
+        for item in expected_images:
             file = ROOT / item["file"]
             self.assertTrue(file.is_file())
             self.assertTrue(file.read_bytes().startswith(b"\xff\xd8\xff"))
         self.assertIn(escape(DATA["images"]["profile"]["alt"]), html)
-        self.assertIn(escape(DATA["images"]["outdoors"]["alt"]), html)
+        for item in DATA["images"]["activities"]:
+            self.assertIn(escape(item["alt"]), html)
+        self.assertEqual(html.count('class="activity-photo"'), 3)
 
     def test_local_links(self):
         for file in [ROOT / "index.html", ROOT / "zh/index.html"]:
@@ -89,13 +93,14 @@ class EnglishHomepage(unittest.TestCase):
             "Research Assistant",
             "The Hong Kong Polytechnic University",
             "Dr. Jiaqiang Zhu",
-            'datetime="2026-08-10"',
-            "August 10, 2026",
             "Research Experience",
             "Methods &amp; tools",
             "Earlier work in linguistics",
         ]:
             self.assertIn(value, html)
+        self.assertIn("hongli.liu@polyu.edu.hk", html)
+        self.assertIn("incrementally processes language", html)
+        self.assertIn("I received my M.A. and B.A. from Sichuan University.", html)
         self.assertEqual(html.count('class="research-project"'), 3)
         for item in DATA["research"]:
             self.assertIn(escape(item["title"]), html)
@@ -133,7 +138,7 @@ class EnglishHomepage(unittest.TestCase):
 
     def test_no_obsolete_or_private_content(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ["cv_Liu", "tel:", "Chengdu", "Master's student", "fonts.googleapis.com", "PsychoPy", "cortex.2024.08.009"]:
+        for token in ["cv_Liu", "tel:", "Chengdu", "Master's student", "fonts.googleapis.com", "PsychoPy", "cortex.2024.08.009", "15082195267@163.com", "hongliliu.research@gmail.com", "incremenrtally", "Assistantat"]:
             self.assertNotIn(token, html)
         self.assertIsNone(re.search(r"(?<!\d)1\d{2}[- ]\d{4}[- ]\d{4}(?!\d)", html))
         self.assertEqual(len(ET.parse(ROOT / "sitemap.xml").findall(".//{*}loc")), 1)

@@ -74,8 +74,8 @@ def render():
     role = d["position"]
     asset_version = e(d["asset_version"])
     profile = d["images"]["profile"]
-    outdoors = d["images"]["outdoors"]
-    for image in (profile, outdoors):
+    activities = d["images"]["activities"]
+    for image in [profile, *activities]:
         if not (ROOT / image["file"]).is_file():
             raise FileNotFoundError(f"Missing image: {ROOT / image['file']}")
     supervisor = f'<a href="{e(role["supervisor_url"])}" target="_blank" rel="noopener noreferrer">Dr. {e(role["supervisor"])}</a>'
@@ -165,6 +165,10 @@ def render():
         "Research in language comprehension, visual word recognition, semantic processing, and EEG/ERP."
     )
     hobby_items = "".join(f"<li>{e(item)}</li>" for item in d["personal"]["hobbies"])
+    activity_gallery = "".join(
+        f'''<figure class="activity-photo"><img src="./{e(item['file'])}?v={asset_version}" alt="{e(item['alt'])}" width="{e(item['width'])}" height="{e(item['height'])}"><figcaption>{e(item['label'])}</figcaption></figure>'''
+        for item in activities
+    )
 
     html = f'''<!doctype html>
 <html lang="en">
@@ -202,7 +206,7 @@ def render():
         <h2 id="background-heading">About</h2>
         <div class="about-grid">
           <div class="about-copy"><p class="lead">{e(d['about'])}</p>
-            <p>I am currently a <strong>{e(role['title'])}</strong> at <a href="{e(role['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(role['institution'])}</a>, supervised by {supervisor}. I joined on <time datetime="{e(role['start'])}">August 10, 2026</time>.</p>
+            <p>I am currently a <strong>{e(role['title'])}</strong> at <a href="{e(role['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(role['institution'])}</a>, supervised by {supervisor}. I received my M.A. and B.A. from Sichuan University.</p>
             <h3>Research interests</h3><ul class="interest-list">{interests}</ul>
           </div>
           <figure class="profile-photo"><img src="./{e(profile['file'])}?v={asset_version}" alt="{e(profile['alt'])}" width="1280" height="1703"></figure>
@@ -233,9 +237,8 @@ def render():
 
       <section class="content-section" id="beyond" aria-labelledby="beyond-heading">
         <h2 id="beyond-heading">{e(d['personal']['heading'])}</h2>
-        <div class="beyond-grid"><div><p class="beyond-copy">{e(d['personal']['text'])}</p><ul class="hobby-list">{hobby_items}</ul></div>
-          <figure><img src="./{e(outdoors['file'])}?v={asset_version}" alt="{e(outdoors['alt'])}" width="640" height="854"></figure>
-        </div>
+        <div class="beyond-intro"><p class="beyond-copy">{e(d['personal']['text'])}</p><ul class="hobby-list">{hobby_items}</ul></div>
+        <div class="activity-gallery">{activity_gallery}</div>
       </section>
     </main>
   </div>
