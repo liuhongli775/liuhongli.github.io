@@ -244,12 +244,14 @@ def render():
 
       <section class="content-section message-section" id="message" aria-labelledby="message-heading">
         <h2 id="message-heading">{e(d['message']['heading'])}</h2>
-        <p class="message-intro">{e(d['message']['text'])}</p>
-        <form class="message-form" data-message-form data-recipient="{e(d['email'])}" action="mailto:{e(d['email'])}?subject=Message%20from%20your%20academic%20homepage" method="post" enctype="text/plain">
-          <div class="form-grid"><label>Name<input type="text" name="name" autocomplete="name" required maxlength="100"></label>
-            <label>Email<input type="email" name="email" autocomplete="email" required maxlength="254"></label></div>
-          <label>Message<textarea name="message" rows="7" required maxlength="2000"></textarea></label>
-          <div class="form-actions"><button type="submit">Open email to send</button><p>Submitting opens your email application. This website does not store your message.</p></div>
+        <p class="message-intro">{e(d['message']['text'])} You do not need to provide your name or email address.</p>
+        <form class="message-form" data-message-form action="https://formsubmit.co/{e(d['email'])}" method="post">
+          <input type="hidden" name="_subject" value="Anonymous message from academic homepage">
+          <input type="hidden" name="_next" value="{e(d['url'])}/?message=sent#message">
+          <input type="hidden" name="_url" value="{e(d['url'])}/#message">
+          <label class="form-honey" aria-hidden="true">Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+          <label>Anonymous message<textarea name="message" rows="7" required maxlength="2000" placeholder="Write your message here…"></textarea></label>
+          <div class="form-actions"><button type="submit">Send anonymously</button><p>Messages are processed by FormSubmit and forwarded to my inbox. <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">Privacy information ↗</a></p></div>
           <p class="message-status" data-message-status role="status" aria-live="polite"></p>
         </form>
       </section>
