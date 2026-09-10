@@ -62,10 +62,11 @@ def research_entry(item):
         pub = PUBLICATIONS[item["publication_id"]]
         doi_url = "https://doi.org/" + pub["doi"]
         meta = f"Journal article · {pub['journal']} · {pub['year']}"
+        doi_link = link(doi_url, doi_url, "citation-doi")
         citation = (
             f"{author_line(pub['authors'])} ({e(pub['year'])}). "
             f"{e(pub['title'])}. <em>{e(pub['journal'])}</em>, "
-            f"<em>{e(pub['volume'])}</em>, {e(pub['pages'])}. {e(doi_url)}"
+            f"<em>{e(pub['volume'])}</em>, {e(pub['pages'])}. {doi_link}"
         )
         title_html = link(item["title"], doi_url, "research-title-link")
     else:

@@ -165,7 +165,8 @@ button { cursor: pointer; }
 .research-body { max-width: 720px; margin-top: 23px; }
 .research-body > p + p { margin-top: 14px; }
 .research-question { font: 18px/1.62 var(--serif); }
-.research-citation { color: var(--muted); font-size: 13px; }
+.research-citation { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.citation-doi { text-decoration-color: #a9b8c0; text-underline-offset: 2px; }
 .research-methods { color: var(--muted); font-size: 13px; }
 .research-methods span { color: var(--ink); font-weight: 650; }
 .research-title-link { color: var(--ink); }

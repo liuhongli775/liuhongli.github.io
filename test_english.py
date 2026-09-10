@@ -86,6 +86,7 @@ class EditorialHomepage(unittest.TestCase):
                 self.assertIn(escape(publication["title"]), html)
                 self.assertIn(doi_url, html)
                 self.assertIn(f'<h3><a class="research-title-link" href="{doi_url}"', html)
+                self.assertIn(f'<a class="citation-doi" href="{doi_url}"', html)
         presentation = DATA["presentation"]
         self.assertIn(escape(PROJECTS[0]["title"]), html)
         self.assertIn(escape(PROJECTS[0]["subtitle"]), html)
