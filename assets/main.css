@@ -167,8 +167,8 @@ button { cursor: pointer; }
 .research-citation { color: var(--muted); font-size: 13px; }
 .research-methods { color: var(--muted); font-size: 13px; }
 .research-methods span { color: var(--ink); font-weight: 650; }
-.research-links { font-size: 13px; }
-.research-link { text-decoration: underline; text-decoration-color: #a9b8c0; text-underline-offset: 3px; }
+.research-title-link { color: var(--ink); }
+.research-title-link:hover { color: var(--accent); }
 
 .reading-empty { margin-top: 20px; color: var(--muted); font-size: 14px; }
 .reading-entry { padding: 22px 0; border-bottom: 1px solid var(--line); }
@@ -200,6 +200,18 @@ button { cursor: pointer; }
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.form-honey {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .message-form { max-width: 720px; margin-top: 27px; }

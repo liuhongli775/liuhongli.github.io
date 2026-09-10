@@ -80,14 +80,17 @@ class EditorialHomepage(unittest.TestCase):
                 self.assertIn(escape(method), html)
             if project["source"] == "publication":
                 publication = next(item for item in DATA["publications"] if item["id"] == project["publication_id"])
+                doi_url = "https://doi.org/" + publication["doi"]
                 self.assertIn(publication["journal"], html)
                 self.assertIn(publication["year"], html)
-                self.assertIn("https://doi.org/" + publication["doi"], html)
+                self.assertIn(escape(publication["title"]), html)
+                self.assertIn(doi_url, html)
+                self.assertIn(f'<h3><a class="research-title-link" href="{doi_url}"', html)
         presentation = DATA["presentation"]
         self.assertIn(escape(PROJECTS[0]["title"]), html)
         self.assertIn(escape(PROJECTS[0]["subtitle"]), html)
         self.assertIn(presentation["venue"], html)
-        self.assertNotIn(">Poster<", html)
+        self.assertNotIn(">Paper</a>", html)
 
     def test_removed_legacy_structure_and_wording(self):
         page = "\n".join([
@@ -137,7 +140,9 @@ class EditorialHomepage(unittest.TestCase):
 
     def test_anonymous_message_form(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
         self.assertIn('action="https://formsubmit.co/' + DATA["email"] + '"', html)
+        self.assertRegex(css, r"\.form-honey\s*\{[^}]*clip-path")
         self.assertEqual(html.count("<textarea"), 1)
         self.assertIn('name="message"', html)
         self.assertIn('name="_honey"', html)

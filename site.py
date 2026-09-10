@@ -60,20 +60,24 @@ def interest_entry(item):
 def research_entry(item):
     if item["source"] == "publication":
         pub = PUBLICATIONS[item["publication_id"]]
+        doi_url = "https://doi.org/" + pub["doi"]
         meta = f"Journal article · {pub['journal']} · {pub['year']}"
-        citation = f"{author_line(pub['authors'])} <em>{e(pub['journal'])}, {e(pub['volume'])}</em>, {e(pub['pages'])}."
-        paper = link("Paper", "https://doi.org/" + pub["doi"], "research-link")
+        citation = (
+            f"{author_line(pub['authors'])} ({e(pub['year'])}). "
+            f"{e(pub['title'])}. <em>{e(pub['journal'])}</em>, "
+            f"<em>{e(pub['volume'])}</em>, {e(pub['pages'])}. {e(doi_url)}"
+        )
+        title_html = link(item["title"], doi_url, "research-title-link")
     else:
         presentation = DATA["presentation"]
         meta = f"{item['meta']} · {presentation['year']}"
         citation = f"{presentation['venue']}. <em>{presentation['theme']}</em>."
-        paper = ""
+        title_html = e(item["title"])
 
     methods = " · ".join(item["methods"])
-    link_block = f'<p class="research-links">{paper}</p>' if paper else ""
     return f'''<article class="research-entry">
       <header class="research-header">
-        <div><h3>{e(item['title'])}</h3><p class="research-subtitle">{e(item['subtitle'])}</p></div>
+        <div><h3>{title_html}</h3><p class="research-subtitle">{e(item['subtitle'])}</p></div>
         <p class="research-meta">{e(meta)}</p>
       </header>
       <div class="research-body">
@@ -81,7 +85,6 @@ def research_entry(item):
         <p>{e(item['text'])}</p>
         <p class="research-citation">{citation}</p>
         <p class="research-methods"><span>Methods:</span> {e(methods)}</p>
-        {link_block}
       </div>
     </article>'''
 
