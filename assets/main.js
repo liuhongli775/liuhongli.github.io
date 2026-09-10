@@ -1,44 +1,29 @@
 'use strict';
-document.documentElement.classList.add('js');
-
 const legacyHashes = {
-  '#background': '#home',
+  '#home': '#about',
+  '#background': '#about',
+  '#themes': '#interests',
+  '#computational': '#research',
+  '#notes': '#reading',
+  '#publications': '#research',
   '#materials': '#about',
-  '#beyond': '#about',
-  '#message': '#contact'
+  '#beyond': '#hobbies',
+  '#contact': '#message',
+  '#message': '#message'
 };
 if (legacyHashes[window.location.hash]) {
   history.replaceState(null, '', legacyHashes[window.location.hash]);
 }
-
-document.querySelectorAll('[data-copy]').forEach(button => {
-  button.addEventListener('click', async () => {
-    const text = document.getElementById(button.dataset.copy);
-    const status = button.parentElement.querySelector('.copy-status');
-    try {
-      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
-      await navigator.clipboard.writeText(text.textContent);
-      status.textContent = 'Copied.';
-    } catch {
-      const range = document.createRange();
-      range.selectNodeContents(text);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      status.textContent = 'Text selected. Press Ctrl+C or ⌘C to copy.';
-    }
-  });
-});
 
 const messageForm = document.querySelector('[data-message-form]');
 if (messageForm) {
   messageForm.addEventListener('submit', () => {
     const button = messageForm.querySelector('button[type="submit"]');
     button.disabled = true;
-    document.querySelector('[data-message-status]').textContent = 'Sending your anonymous message…';
+    document.querySelector('[data-message-status]').textContent = 'Sending your message…';
   });
   if (new URLSearchParams(window.location.search).get('message') === 'sent') {
-    document.querySelector('[data-message-status]').textContent = 'Thank you — your anonymous message has been sent.';
+    document.querySelector('[data-message-status]').textContent = 'Thank you — your message has been sent.';
   }
 }
 

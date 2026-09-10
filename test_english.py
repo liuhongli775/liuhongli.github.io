@@ -1,4 +1,4 @@
-"""Offline integrity tests for the research-focused academic homepage."""
+"""Offline integrity tests for the editorial academic homepage."""
 from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
@@ -12,9 +12,8 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 BUILDER = runpy.run_path(str(ROOT / "site.py"))
 DATA = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))
-THEMES = json.loads((ROOT / "data/themes.json").read_text(encoding="utf-8"))
+INTERESTS = json.loads((ROOT / "data/themes.json").read_text(encoding="utf-8"))
 PROJECTS = json.loads((ROOT / "data/projects.json").read_text(encoding="utf-8"))
-QUESTIONS = json.loads((ROOT / "data/questions.json").read_text(encoding="utf-8"))
 READINGS = json.loads((ROOT / "data/readings.json").read_text(encoding="utf-8"))
 
 
@@ -35,7 +34,7 @@ class Parser(HTMLParser):
             self.urls.append(attrs["src"])
 
 
-class ResearchHomepage(unittest.TestCase):
+class EditorialHomepage(unittest.TestCase):
     def test_build_reproducible(self):
         self.assertEqual((ROOT / "index.html").read_text(encoding="utf-8"), BUILDER["render"]())
         self.assertEqual((ROOT / "zh/index.html").read_text(encoding="utf-8"), BUILDER["legacy_redirect"]())
@@ -47,98 +46,122 @@ class ResearchHomepage(unittest.TestCase):
         self.assertEqual(sum(tag == "h1" for tag, _ in parser.tags), 1)
         self.assertEqual(sum(tag == "main" for tag, _ in parser.tags), 1)
         section_ids = [attrs["id"] for tag, attrs in parser.tags if tag == "section" and "id" in attrs]
-        self.assertEqual(section_ids, ["home", "themes", "research", "computational", "notes", "publications", "about", "contact"])
-        order = [
-            "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
-            "Research themes",
-            "Selected research",
-            "Selected computational projects",
-            "Questions I’m Thinking About",
-            "What I’m Reading",
-            "Short Bio",
-            "Leave an anonymous message",
-        ]
-        positions = [html.index(item) for item in order]
-        self.assertEqual(positions, sorted(positions))
+        self.assertEqual(section_ids, ["about", "interests", "research", "reading", "hobbies", "message"])
+        headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html)
+        self.assertEqual(headings, ["Research Interests", "Research", "Recent Reading", "Hobbies", "Message Me"])
+        self.assertEqual(html.count('class="research-entry"'), 3)
 
-    def test_research_identity_first(self):
+    def test_about_identity_and_real_links_only(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(DATA["name"], html)
         self.assertIn(DATA["research_statement"], html)
+        self.assertIn("I am currently a Research Assistant at ", html)
+        self.assertIn(". I received my M.A. in Linguistics and Applied Linguistics and my B.A. in Chinese Language and Literature from ", html)
+        for item in DATA["background_links"]:
+            self.assertIn(
+                f'<a href="{item["url"]}" target="_blank" rel="noopener noreferrer"><strong>{item["name"]}</strong></a>',
+                html,
+            )
         self.assertIn(DATA["position"]["title"], html)
         self.assertIn(DATA["position"]["institution"], html)
         self.assertIn('href="' + DATA["github"] + '"', html)
         self.assertIn('href="mailto:' + DATA["email"] + '"', html)
         self.assertNotIn(">CV</a>", html)
         self.assertNotIn("Google Scholar</a>", html)
+        self.assertIn('class="wordmark" href="#top">Hongli Liu</a>', html)
 
-    def test_data_driven_content(self):
-        self.assertEqual(len(THEMES), 3)
-        self.assertEqual(len(PROJECTS["selected_research"]), 3)
-        self.assertEqual(len(PROJECTS["computational_projects"]), 4)
-        self.assertEqual(len(QUESTIONS), 4)
+    def test_data_driven_interests_and_research(self):
+        self.assertEqual(len(INTERESTS), 4)
+        self.assertEqual(len(PROJECTS), 3)
         self.assertEqual(READINGS, [])
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        for theme in THEMES:
-            self.assertIn(escape(theme["title"]), html)
-        for project in PROJECTS["selected_research"]:
+        for interest in INTERESTS:
+            self.assertIn(escape(interest["title"]), html)
+            self.assertIn(escape(interest["text"]), html)
+        for project in PROJECTS:
             self.assertIn(escape(project["title"]), html)
+            self.assertIn(escape(project["question"]), html)
+            self.assertIn(escape(project["text"]), html)
             for method in project["methods"]:
                 self.assertIn(escape(method), html)
-        for project in PROJECTS["computational_projects"]:
-            self.assertIn(project["title"], html)
-            for field in ["problem", "data", "method", "output"]:
-                self.assertIn(project[field], html)
-        for question in QUESTIONS:
-            self.assertIn(question, html)
-        self.assertIn("Reading notes will appear here.", html)
-        self.assertNotIn('class="reading-entry"', html)
+            if project["source"] == "publication":
+                publication = next(item for item in DATA["publications"] if item["id"] == project["publication_id"])
+                doi_url = "https://doi.org/" + publication["doi"]
+                self.assertIn(publication["journal"], html)
+                self.assertIn(publication["year"], html)
+                self.assertIn(escape(publication["title"]), html)
+                self.assertIn(doi_url, html)
+                self.assertIn(f'<h3><a class="research-title-link" href="{doi_url}"', html)
+                self.assertIn(f'<a class="citation-doi" href="{doi_url}"', html)
+        presentation = DATA["presentation"]
+        self.assertIn(escape(PROJECTS[0]["title"]), html)
+        self.assertIn(escape(PROJECTS[0]["subtitle"]), html)
+        self.assertIn(presentation["venue"], html)
+        self.assertNotIn(">Paper</a>", html)
 
-    def test_publications_conventional_and_secondary(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        publication = html.split('id="publications"', 1)[1].split("</section>", 1)[0]
-        titles = [DATA["presentation"]["title"]] + [
-            item["title"] for item in sorted(DATA["publications"], key=lambda item: item["date"], reverse=True)
-        ]
-        positions = [publication.index(title) for title in titles]
-        self.assertEqual(positions, sorted(positions))
-        self.assertEqual(publication.count('class="publication-entry'), 3)
-        self.assertIn("Article citations (.bib)", publication)
-        for item in DATA["publications"]:
-            self.assertIn("https://doi.org/" + item["doi"], publication)
+    def test_removed_legacy_structure_and_wording(self):
+        page = "\n".join([
+            (ROOT / "index.html").read_text(encoding="utf-8"),
+            (ROOT / "assets/main.css").read_text(encoding="utf-8"),
+            (ROOT / "assets/main.js").read_text(encoding="utf-8"),
+        ])
+        for token in [
+            "One research program, three connected perspectives.",
+            "Questions first. Methods in conversation.",
+            "Computational work as part of the science.",
+            "Research output.",
+            "Short Bio.",
+            "Current focus",
+            "Boxed HL",
+            "Beyond Research",
+            'id="publications"',
+            'id="computational"',
+            'id="contact"',
+            "reading-placeholder",
+            "computational-card",
+            "featured-project",
+            "@keyframes",
+            "linear-gradient",
+            "box-shadow",
+            "rotate(",
+        ]:
+            self.assertNotIn(token, page)
 
-    def test_about_resources_and_images(self):
+    def test_empty_reading_is_intentional(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Short Bio.", html)
-        self.assertNotIn("National Scholarship", html)
-        self.assertIn("Sichuan University", html)
-        self.assertIn("EEG/ERP Preprocessing Manual", html)
+        reading = html.split('id="reading"', 1)[1].split("</section>", 1)[0]
+        self.assertIn("waiting", reading)
+        self.assertNotIn("Notes from recent reading will appear here.", reading)
+        self.assertNotIn("will appear here", reading)
+        self.assertNotIn("dashed", reading)
+        self.assertNotIn("reading-placeholder", reading)
+        self.assertIn("Reading entry format: edit data/readings.json", reading)
+        self.assertIn('"title": "Paper title"', reading)
+        self.assertIn('"note": "One short sentence."', reading)
+
+    def test_hobbies_use_two_existing_photos(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
         images = [attrs for tag, attrs in Parser(ROOT / "index.html").tags if tag == "img"]
-        self.assertEqual(len(images), 4)
+        self.assertEqual(len(images), 3)
         self.assertTrue(all(item.get("alt", "").strip() for item in images))
-        for image in [DATA["images"]["profile"], *DATA["images"]["activities"]]:
+        self.assertNotIn("assets/daily.jpg", html)
+        for image in [DATA["images"]["profile"], *DATA["images"]["hobbies"]]:
             self.assertTrue((ROOT / image["file"]).is_file())
             self.assertIn(image["file"] + "?v=" + DATA["asset_version"], html)
-        for resource in DATA["materials"]:
-            self.assertTrue((ROOT / resource["file"]).read_bytes().startswith(b"%PDF-"))
+        self.assertEqual(len(DATA["images"]["hobbies"]), 2)
 
     def test_anonymous_message_form(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
         self.assertIn('action="https://formsubmit.co/' + DATA["email"] + '"', html)
+        self.assertRegex(css, r"\.form-honey\s*\{[^}]*clip-path")
+        self.assertEqual(html.count("<textarea"), 1)
         self.assertIn('name="message"', html)
         self.assertIn('name="_honey"', html)
         self.assertNotIn('name="name"', html)
         self.assertNotIn('name="email"', html)
-        self.assertIn("Send anonymously", html)
-
-    def test_no_pagination_or_decorative_motion(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
-        script = (ROOT / "assets/main.js").read_text(encoding="utf-8")
-        for token in ["page-track", "folio-page", "page-progress", "data-page-status", "data-page-turn", "showPage(", "translateX"]:
-            self.assertNotIn(token, html + css + script)
-        self.assertNotIn("@keyframes", css)
-        self.assertNotIn("linear-gradient", css)
-        self.assertIn("font: 1rem/", css)
+        self.assertIn(">Send</button>", html)
+        self.assertIn("You can leave this message anonymously.", html)
 
     def test_local_links_and_external_safety(self):
         for file in [ROOT / "index.html", ROOT / "zh/index.html"]:
@@ -155,11 +178,13 @@ class ResearchHomepage(unittest.TestCase):
                 if attrs.get("target") == "_blank":
                     self.assertIn("noopener", attrs.get("rel", ""))
 
-    def test_bibliography_and_privacy(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
+    def test_bibliography_materials_and_privacy(self):
         bib = (ROOT / "publications.bib").read_text(encoding="utf-8")
         self.assertEqual(bib.count("@article{"), 2)
         self.assertLess(bib.index("yu2025graspability"), bib.index("liu2025nd250"))
+        for material in DATA["materials"]:
+            self.assertTrue((ROOT / material["file"]).read_bytes().startswith(b"%PDF-"))
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ["15082195267@163.com", "hongliliu.research@gmail.com", "cv_Liu", "tel:", "fonts.googleapis.com"]:
             self.assertNotIn(token, html)
         self.assertIsNone(re.search(r"(?<!\d)1\d{2}[- ]\d{4}[- ]\d{4}(?!\d)", html))
