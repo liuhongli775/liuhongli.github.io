@@ -4,7 +4,7 @@
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
   "updated": "2026-09-10",
-  "asset_version": "20260910-editorial-home-7",
+  "asset_version": "20260910-editorial-home-8",
   "identity_line": "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
   "research_statement": "I study how linguistic knowledge is represented and processed during real-time language comprehension. I am particularly interested in the relationship between categorical linguistic representations and continuous semantic and probabilistic information, and in how experimental, neural, and computational approaches can be combined to investigate this relationship.",
   "links": {
@@ -114,5 +114,15 @@
       "note": "Personal research notes, not an official software manual. The batch-processing script mentioned as Attachment 2 is not included in this PDF."
     }
   ],
-  "background": "I am currently a Research Assistant at The Hong Kong Polytechnic University. I received my M.A. in Linguistics and Applied Linguistics and my B.A. in Chinese Language and Literature from Sichuan University."
+  "background": "I am currently a Research Assistant at The Hong Kong Polytechnic University. I received my M.A. in Linguistics and Applied Linguistics and my B.A. in Chinese Language and Literature from Sichuan University.",
+  "background_links": [
+    {
+      "name": "The Hong Kong Polytechnic University",
+      "url": "https://www.polyu.edu.hk/"
+    },
+    {
+      "name": "Sichuan University",
+      "url": "https://en.scu.edu.cn/"
+    }
+  ]
 }

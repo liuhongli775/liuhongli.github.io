@@ -55,7 +55,13 @@ class EditorialHomepage(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn(DATA["name"], html)
         self.assertIn(DATA["research_statement"], html)
-        self.assertIn(DATA["background"], html)
+        self.assertIn("I am currently a Research Assistant at ", html)
+        self.assertIn(". I received my M.A. in Linguistics and Applied Linguistics and my B.A. in Chinese Language and Literature from ", html)
+        for item in DATA["background_links"]:
+            self.assertIn(
+                f'<a href="{item["url"]}" target="_blank" rel="noopener noreferrer"><strong>{item["name"]}</strong></a>',
+                html,
+            )
         self.assertIn(DATA["position"]["title"], html)
         self.assertIn(DATA["position"]["institution"], html)
         self.assertIn('href="' + DATA["github"] + '"', html)

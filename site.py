@@ -142,6 +142,14 @@ def render():
         for item in hobbies
     )
 
+    background_html = e(d["background"])
+    for item in d.get("background_links", []):
+        if item.get("url"):
+            linked_name = (
+                f'<a href="{e(item["url"])}" target="_blank" rel="noopener noreferrer">'
+                f'<strong>{e(item["name"])}</strong></a>'
+            )
+            background_html = background_html.replace(e(item["name"]), linked_name)
     structured = json.dumps({
         "@context": "https://schema.org",
         "@type": "Person",
@@ -184,7 +192,7 @@ def render():
         <p class="position"><span>{e(role['title'])}</span><br><a href="{e(role['institution_url'])}" target="_blank" rel="noopener noreferrer">{e(role['institution'])}</a></p>
         <p class="identity-line">{e(d['identity_line'])}</p>
         <p class="research-intro">{e(d['research_statement'])}</p>
-        <p class="background">{e(d['background'])}</p>
+        <p class="background">{background_html}</p>
         <p class="about-links">{about_link_html}</p>
       </div>
       <figure class="about-portrait"><img src="./{e(profile['file'])}?v={version}" alt="{e(profile['alt'])}" width="1280" height="1703"></figure>
