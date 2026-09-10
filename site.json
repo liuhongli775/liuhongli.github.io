@@ -3,30 +3,49 @@
   "email": "hongli.liu@polyu.edu.hk",
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
-  "updated": "2026-09-09",
-  "asset_version": "20260910-research-home",
+  "updated": "2026-09-10",
+  "asset_version": "20260910-editorial-home",
   "identity_line": "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
-  "research_statement": "I study how linguistic knowledge is represented and processed in the human mind, with a particular interest in the relationship between categorical linguistic representations and continuous probabilistic information. I combine EEG/ERP experiments with computational models of language to investigate these questions.",
+  "research_statement": "I study how linguistic knowledge is represented and processed during real-time language comprehension. I am particularly interested in the relationship between categorical linguistic representations and continuous semantic and probabilistic information, and in how experimental, neural, and computational approaches can be combined to investigate this relationship.",
   "links": {
     "cv": "",
     "scholar": ""
   },
   "images": {
-    "profile": {"file": "assets/profile.jpg", "alt": "Portrait of Hongli Liu outdoors"},
-    "activities": [
-      {"file": "assets/outdoors.jpg", "alt": "Hongli Liu beside a mountain lake", "label": "Hiking and travel", "width": 640, "height": 854},
-      {"file": "assets/hiking-1.jpg", "alt": "Hongli Liu hiking on a wooded trail", "label": "Hiking", "width": 1279, "height": 1706},
-      {"file": "assets/daily.jpg", "alt": "Hongli Liu seated by a window", "label": "Everyday moments", "width": 1707, "height": 1280}
+    "profile": {
+      "file": "assets/profile.jpg",
+      "alt": "Portrait of Hongli Liu outdoors"
+    },
+    "hobbies": [
+      {
+        "file": "assets/outdoors.jpg",
+        "alt": "Hongli Liu beside a mountain lake",
+        "label": "Hiking and travel",
+        "width": 640,
+        "height": 854
+      },
+      {
+        "file": "assets/hiking-1.jpg",
+        "alt": "Hongli Liu hiking on a wooded trail",
+        "label": "Hiking",
+        "width": 1279,
+        "height": 1706
+      }
     ]
   },
   "personal": {
-    "heading": "Beyond Research",
+    "heading": "Hobbies",
     "text": "Outside research, I enjoy hiking, running, working out, and playing badminton.",
-    "hobbies": ["Hiking", "Running", "Fitness", "Badminton"]
+    "hobbies": [
+      "Hiking",
+      "Running",
+      "Fitness",
+      "Badminton"
+    ]
   },
   "message": {
-    "heading": "Leave a Message",
-    "text": "If you would like to discuss research, ask a question, or simply say hello, feel free to send me a message."
+    "heading": "Message Me",
+    "text": "If you would like to discuss research, share an idea, or simply say hello, feel free to leave me a message."
   },
   "position": {
     "title": "Research Assistant",
@@ -37,14 +56,15 @@
     "start": "2026-08-10",
     "date_label": "August 10, 2026 – present"
   },
-  "about": "I am interested in how the human brain incrementally processes language, especially how different sources of linguistic information—such as syntax and semantics—are represented and interact in the mind. To investigate these questions, my research combines behavioral experiments, EEG/ERP methods, and computational measures derived from language models, such as surprisal.",
-  "background": "My academic background is in Linguistics and Applied Linguistics at Sichuan University, where my master’s research was supervised by Dr. Feng Gu.",
-  "interests": ["Sentence comprehension", "Visual word recognition", "Semantic processing", "Large language models"],
   "publications": [
     {
       "id": "liu2025nd250",
       "title": "ND250 as a prediction error signal in orthographic processing: Evidence from comparing ERPs to handwritten and printed words",
-      "authors": ["Liu, H.", "Zhang, J.", "Gu, F."],
+      "authors": [
+        "Liu, H.",
+        "Zhang, J.",
+        "Gu, F."
+      ],
       "bib_authors": "Liu, Hongli and Zhang, Jiayi and Gu, Feng",
       "year": "2025",
       "date": "2025-05",
@@ -57,7 +77,12 @@
     {
       "id": "yu2025graspability",
       "title": "Graspability in disguise: The cognitive and neural differences in processing words representing small and big objects",
-      "authors": ["Yu, R.", "Liu, H.", "Ran, Y.", "Gu, F."],
+      "authors": [
+        "Yu, R.",
+        "Liu, H.",
+        "Ran, Y.",
+        "Gu, F."
+      ],
       "bib_authors": "Yu, Ruifeng and Liu, Hongli and Ran, Yuyang and Gu, Feng",
       "year": "2025",
       "date": "2025-06",
@@ -68,43 +93,6 @@
       "doi": "10.1016/j.cortex.2025.04.003"
     }
   ],
-  "education": [
-    {"title": "M.A. in Linguistics and Applied Linguistics", "institution": "Sichuan University", "institution_url": "https://en.scu.edu.cn/", "dates": "September 2023 – June 2026"},
-    {"title": "B.A. in Chinese Language and Literature", "institution": "Sichuan University", "institution_url": "https://en.scu.edu.cn/", "dates": "September 2019 – June 2023"}
-  ],
-  "research": [
-    {
-      "title": "Coercion and predictability in Mandarin",
-      "context": "Master’s dissertation · Sichuan University",
-      "text": "I investigate coercion in Mandarin adverb–noun constructions, bringing together EEG, behavioral norms, and computational measures of predictability.",
-      "contributions": ["Designed the EEG experiment and stimuli, recruited 60 participants, and conducted EEG data collection.", "Collected completion norms and semantic ratings, computed LLM surprisal, and modeled trial-level EEG responses using regression-based ERP estimation (rERP)."],
-      "methods": "EEG · Completion norms · LLM surprisal · rERP"
-    },
-    {
-      "title": "Object size and semantic processing",
-      "context": "Collaborative project · October 2023–April 2025",
-      "text": "This project examined cognitive and neural differences in processing words referring to small and large objects.",
-      "contributions": ["Recruited 228 participants across the behavioral and EEG experiments and organized subjective semantic ratings.", "Preprocessed EEG data in MATLAB and contributed to multivariate pattern analysis using MVPA-Light."],
-      "methods": "Behavioral experiments · EEG preprocessing · MVPA",
-      "doi": "10.1016/j.cortex.2025.04.003"
-    },
-    {
-      "title": "Orthographic processing and the ND250",
-      "context": "Collaborative project · September 2023–April 2025",
-      "text": "This project investigated the functional interpretation of the ND250 response by comparing handwritten and printed words.",
-      "contributions": ["Contributed to the 2 × 2 experimental design, prepared 300 stimuli, and independently conducted the EEG experiment after recruiting 30 participants.", "Performed univariate ND250 analyses and exploratory mass-univariate analyses with false discovery rate correction."],
-      "methods": "Experimental design · EEG/ERP · Mass-univariate analysis",
-      "doi": "10.1016/j.jneuroling.2025.101249"
-    }
-  ],
-  "earlier_research": [
-    {"title": "Word-class conversion in Mashi Wentong", "dates": "September 2022–June 2023", "text": "Analyzed grammatical categories and the jia jie (category borrowing) framework in Mashi Wentong, supervised by Dr. Tao Wang."},
-    {"title": "Regional variation in Mandarin erhua", "dates": "September 2022–April 2023", "text": "Classified over 2,900 dictionary entries and organized dialect data in an Excel database, supervised by Prof. Chunhui Liu."}
-  ],
-  "skills": [
-    {"label": "Experiments", "text": "EEG/ERP, behavioral experiments, E-prime; basic eye-tracking"},
-    {"label": "Analysis", "text": "MATLAB, R, Python, SPSS"}
-  ],
   "presentation": {
     "title": "Coercion or Predictability? Evidence from Mandarin Adverb–Nominal Degree Constructions.",
     "type": "Conference poster",
@@ -112,14 +100,6 @@
     "venue": "International Symposium on Language Science (ISLS)",
     "theme": "Interdisciplinary Research and the Legacy of Yuen Ren Chao"
   },
-  "honors": [
-    {"title": "National Scholarship", "years": "2025"},
-    {"title": "Outstanding Graduate of Sichuan University", "years": "2025"},
-    {"title": "Outstanding Graduate Student of Sichuan University", "years": "2023–2024"},
-    {"title": "Outstanding Graduate Student Leader, College of Literature and Journalism", "years": "2023–2024, 2024–2025"},
-    {"title": "Outstanding Teaching Assistant of Sichuan University", "years": "2024"},
-    {"title": "Outstanding Student", "years": "2024", "detail": "The Sixth Summer School on Applied Linguistics and Cognitive Neuroscience, Jinan University"}
-  ],
   "materials": [
     {
       "id": "eeg-handbook",
@@ -133,5 +113,6 @@
       "date_label": "August 13, 2026",
       "note": "Personal research notes, not an official software manual. The batch-processing script mentioned as Attachment 2 is not included in this PDF."
     }
-  ]
+  ],
+  "background": "I am currently a Research Assistant at The Hong Kong Polytechnic University. I received my M.A. in Linguistics and Applied Linguistics and my B.A. in Chinese Language and Literature from Sichuan University."
 }

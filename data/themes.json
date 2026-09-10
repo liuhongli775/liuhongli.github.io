@@ -1,14 +1,18 @@
 [
   {
-    "title": "Language comprehension & linguistic representation",
-    "text": "Categorical and continuous representations; syntax–semantics interactions; prediction and integration during incremental comprehension."
+    "title": "Categorical and continuous linguistic representations",
+    "text": "How much explanatory value do grammatical or categorical representations retain once expectation, semantic association, and contextual predictability are taken into account?"
   },
   {
-    "title": "Neural dynamics of language",
-    "text": "EEG/ERP combined with regression-based ERP estimation, mass-univariate analysis, MVPA, and representational similarity analysis."
+    "title": "Computational models of human language processing",
+    "text": "How can language models be used not merely as prediction tools, but as computational models for testing hypotheses about human comprehension?"
   },
   {
-    "title": "Computational psycholinguistics",
-    "text": "Language-model surprisal, model-derived representations, human–LM comparison, and computational accounts of processing difficulty."
+    "title": "Neural representations of language",
+    "text": "How are linguistic and conceptual representations reflected in EEG/ERP signals, and how can univariate, multivariate, and representational analyses provide complementary evidence?"
+  },
+  {
+    "title": "Multimodal language comprehension",
+    "text": "How do visual and auditory information interact during real-time language processing?"
   }
 ]
