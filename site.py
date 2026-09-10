@@ -211,6 +211,19 @@ def render():
 
     <section class="section site-width" id="reading" aria-labelledby="reading-heading">
       <h2 id="reading-heading">Recent Reading</h2>
+      <!-- Reading entry format: edit data/readings.json, then run python site.py.
+      [
+        {{
+          "title": "Paper title",
+          "authors": "Authors",
+          "year": "2026",
+          "venue": "Journal or conference",
+          "url": "https://doi.org/...",
+          "note_label": "Why I’m reading this",
+          "note": "One short sentence."
+        }}
+      ]
+      -->
       {readings_html}
     </section>
 

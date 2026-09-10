@@ -135,6 +135,9 @@ class EditorialHomepage(unittest.TestCase):
         self.assertNotIn("will appear here", reading)
         self.assertNotIn("dashed", reading)
         self.assertNotIn("reading-placeholder", reading)
+        self.assertIn("Reading entry format: edit data/readings.json", reading)
+        self.assertIn('"title": "Paper title"', reading)
+        self.assertIn('"note": "One short sentence."', reading)
 
     def test_hobbies_use_two_existing_photos(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
