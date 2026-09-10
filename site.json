@@ -4,7 +4,13 @@
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
   "updated": "2026-09-09",
-  "asset_version": "20260909-click-pages",
+  "asset_version": "20260910-research-home",
+  "identity_line": "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
+  "research_statement": "I study how linguistic knowledge is represented and processed in the human mind, with a particular interest in the relationship between categorical linguistic representations and continuous probabilistic information. I combine EEG/ERP experiments with computational models of language to investigate these questions.",
+  "links": {
+    "cv": "",
+    "scholar": ""
+  },
   "images": {
     "profile": {"file": "assets/profile.jpg", "alt": "Portrait of Hongli Liu outdoors"},
     "activities": [

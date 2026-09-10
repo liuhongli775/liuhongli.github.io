@@ -1,4 +1,4 @@
-"""Offline integrity tests for the English academic homepage."""
+"""Offline integrity tests for the research-focused academic homepage."""
 from html import escape
 from html.parser import HTMLParser
 from pathlib import Path
@@ -12,6 +12,10 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parent
 BUILDER = runpy.run_path(str(ROOT / "site.py"))
 DATA = json.loads((ROOT / "site.json").read_text(encoding="utf-8"))
+THEMES = json.loads((ROOT / "data/themes.json").read_text(encoding="utf-8"))
+PROJECTS = json.loads((ROOT / "data/projects.json").read_text(encoding="utf-8"))
+QUESTIONS = json.loads((ROOT / "data/questions.json").read_text(encoding="utf-8"))
+READINGS = json.loads((ROOT / "data/readings.json").read_text(encoding="utf-8"))
 
 
 class Parser(HTMLParser):
@@ -31,61 +35,116 @@ class Parser(HTMLParser):
             self.urls.append(attrs["src"])
 
 
-class EnglishHomepage(unittest.TestCase):
+class ResearchHomepage(unittest.TestCase):
     def test_build_reproducible(self):
         self.assertEqual((ROOT / "index.html").read_text(encoding="utf-8"), BUILDER["render"]())
         self.assertEqual((ROOT / "zh/index.html").read_text(encoding="utf-8"), BUILDER["legacy_redirect"]())
 
-    def test_continuous_english_structure(self):
-        page = Parser(ROOT / "index.html")
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIsNone(re.search(r"[\u4e00-\u9fff]", html))
-        self.assertEqual(len(page.ids), len(set(page.ids)))
-        self.assertEqual(sum(tag == "h1" for tag, _ in page.tags), 1)
-        self.assertEqual(sum(tag == "main" for tag, _ in page.tags), 1)
-        self.assertEqual(
-            [attrs["id"] for tag, attrs in page.tags if tag == "section"],
-            ["background", "publications", "research", "honors", "materials", "beyond", "message"],
-        )
-        for obsolete in ["page-track", "folio-page", "page-indicator", "data-page-turn", "data-view-toggle", "translateX"]:
-            self.assertNotIn(obsolete, html)
-        self.assertIn('data-page-status', html)
-        self.assertIn('data-page-hint', html)
-        script = (ROOT / "assets/main.js").read_text(encoding="utf-8")
-        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
-        self.assertIn("main.addEventListener('click'", script)
-        self.assertIn("showPage(current + 1", script)
-        self.assertIn(".paged-site main", css)
-        self.assertNotIn("translateX", script + css)
-        self.assertNotIn("<svg", html)
-        self.assertIn("assets/profile.jpg?v=" + DATA["asset_version"], html)
-        for image in DATA["images"]["activities"]:
-            self.assertIn(image["file"] + "?v=" + DATA["asset_version"], html)
-        self.assertIn("assets/main.css?v=" + DATA["asset_version"], html)
-        self.assertIn("assets/main.js?v=" + DATA["asset_version"], html)
-
-    def test_images_and_accessible_names(self):
+    def test_information_architecture(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         parser = Parser(ROOT / "index.html")
-        images = [attrs for tag, attrs in parser.tags if tag == "img"]
-        self.assertEqual(len(images), 5)
-        self.assertTrue(all(image.get("alt", "").strip() for image in images))
-        expected_images = [DATA["images"]["profile"], *DATA["images"]["activities"]]
-        for item in expected_images:
-            file = ROOT / item["file"]
-            self.assertTrue(file.is_file())
-            self.assertTrue(file.read_bytes().startswith(b"\xff\xd8\xff"))
-        self.assertIn(escape(DATA["images"]["profile"]["alt"]), html)
-        for item in DATA["images"]["activities"]:
-            self.assertIn(escape(item["alt"]), html)
-        self.assertEqual(html.count('class="activity-photo"'), 3)
-        self.assertFalse((ROOT / "assets/hiking-2.jpg").exists())
+        self.assertEqual(len(parser.ids), len(set(parser.ids)))
+        self.assertEqual(sum(tag == "h1" for tag, _ in parser.tags), 1)
+        self.assertEqual(sum(tag == "main" for tag, _ in parser.tags), 1)
+        section_ids = [attrs["id"] for tag, attrs in parser.tags if tag == "section" and "id" in attrs]
+        self.assertEqual(section_ids, ["home", "themes", "research", "computational", "notes", "publications", "about", "contact"])
+        order = [
+            "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
+            "Research themes",
+            "Selected research",
+            "Selected computational projects",
+            "Questions I’m Thinking About",
+            "What I’m Reading",
+            "Short Bio",
+            "Leave an anonymous message",
+        ]
+        positions = [html.index(item) for item in order]
+        self.assertEqual(positions, sorted(positions))
 
-    def test_local_links(self):
+    def test_research_identity_first(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(DATA["research_statement"], html)
+        self.assertIn(DATA["position"]["title"], html)
+        self.assertIn(DATA["position"]["institution"], html)
+        self.assertIn('href="' + DATA["github"] + '"', html)
+        self.assertIn('href="mailto:' + DATA["email"] + '"', html)
+        self.assertNotIn(">CV</a>", html)
+        self.assertNotIn("Google Scholar</a>", html)
+
+    def test_data_driven_content(self):
+        self.assertEqual(len(THEMES), 3)
+        self.assertEqual(len(PROJECTS["selected_research"]), 3)
+        self.assertEqual(len(PROJECTS["computational_projects"]), 4)
+        self.assertEqual(len(QUESTIONS), 4)
+        self.assertEqual(READINGS, [])
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        for theme in THEMES:
+            self.assertIn(escape(theme["title"]), html)
+        for project in PROJECTS["selected_research"]:
+            self.assertIn(escape(project["title"]), html)
+            for method in project["methods"]:
+                self.assertIn(escape(method), html)
+        for project in PROJECTS["computational_projects"]:
+            self.assertIn(project["title"], html)
+            for field in ["problem", "data", "method", "output"]:
+                self.assertIn(project[field], html)
+        for question in QUESTIONS:
+            self.assertIn(question, html)
+        self.assertIn("Reading notes will appear here.", html)
+        self.assertNotIn('class="reading-entry"', html)
+
+    def test_publications_conventional_and_secondary(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        publication = html.split('id="publications"', 1)[1].split("</section>", 1)[0]
+        titles = [DATA["presentation"]["title"]] + [
+            item["title"] for item in sorted(DATA["publications"], key=lambda item: item["date"], reverse=True)
+        ]
+        positions = [publication.index(title) for title in titles]
+        self.assertEqual(positions, sorted(positions))
+        self.assertEqual(publication.count('class="publication-entry'), 3)
+        self.assertIn("Article citations (.bib)", publication)
+        for item in DATA["publications"]:
+            self.assertIn("https://doi.org/" + item["doi"], publication)
+
+    def test_about_resources_and_images(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Short Bio.", html)
+        self.assertNotIn("National Scholarship", html)
+        self.assertIn("Sichuan University", html)
+        self.assertIn("EEG/ERP Preprocessing Manual", html)
+        images = [attrs for tag, attrs in Parser(ROOT / "index.html").tags if tag == "img"]
+        self.assertEqual(len(images), 4)
+        self.assertTrue(all(item.get("alt", "").strip() for item in images))
+        for image in [DATA["images"]["profile"], *DATA["images"]["activities"]]:
+            self.assertTrue((ROOT / image["file"]).is_file())
+            self.assertIn(image["file"] + "?v=" + DATA["asset_version"], html)
+        for resource in DATA["materials"]:
+            self.assertTrue((ROOT / resource["file"]).read_bytes().startswith(b"%PDF-"))
+
+    def test_anonymous_message_form(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('action="https://formsubmit.co/' + DATA["email"] + '"', html)
+        self.assertIn('name="message"', html)
+        self.assertIn('name="_honey"', html)
+        self.assertNotIn('name="name"', html)
+        self.assertNotIn('name="email"', html)
+        self.assertIn("Send anonymously", html)
+
+    def test_no_pagination_or_decorative_motion(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
+        script = (ROOT / "assets/main.js").read_text(encoding="utf-8")
+        for token in ["page-track", "folio-page", "page-progress", "data-page-status", "data-page-turn", "showPage(", "translateX"]:
+            self.assertNotIn(token, html + css + script)
+        self.assertNotIn("@keyframes", css)
+        self.assertNotIn("linear-gradient", css)
+        self.assertIn("font: 1rem/", css)
+
+    def test_local_links_and_external_safety(self):
         for file in [ROOT / "index.html", ROOT / "zh/index.html"]:
             parser = Parser(file)
-            for link in parser.urls:
-                url = urlsplit(link)
+            for raw_link in parser.urls:
+                url = urlsplit(raw_link)
                 if url.scheme or url.netloc:
                     continue
                 target = (file.parent / unquote(url.path)).resolve() if url.path else file
@@ -96,72 +155,12 @@ class EnglishHomepage(unittest.TestCase):
                 if attrs.get("target") == "_blank":
                     self.assertIn("noopener", attrs.get("rel", ""))
 
-    def test_profile_research_and_honors(self):
+    def test_bibliography_and_privacy(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        for value in [
-            "Research Assistant",
-            "The Hong Kong Polytechnic University",
-            "Dr. Jiaqiang Zhu",
-            "Research Experience",
-            "Methods &amp; tools",
-            "Earlier work in linguistics",
-        ]:
-            self.assertIn(value, html)
-        self.assertIn("hongli.liu@polyu.edu.hk", html)
-        self.assertIn("incrementally processes language", html)
-        self.assertIn("I received my M.A. and B.A. from ", html)
-        self.assertGreaterEqual(html.count('href="https://en.scu.edu.cn/"'), 3)
-        self.assertEqual(html.count('class="research-project"'), 3)
-        for item in DATA["research"]:
-            self.assertIn(escape(item["title"]), html)
-            for point in item["contributions"]:
-                self.assertIn(escape(point), html)
-        self.assertEqual(html.count('class="dates"'), 10)
-        self.assertEqual(html.count("<li><p class=\"dates\""), 6)
-        for item in DATA["honors"]:
-            self.assertIn(escape(item["title"]), html)
-
-    def test_outputs_reverse_chronological(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        section = html.split('id="publications"', 1)[1].split("</section>", 1)[0]
-        self.assertEqual(re.findall(r'data-date="([^"]+)"', section), ["2026", "2025-06", "2025-05"])
-        self.assertEqual([item["date"] for item in BUILDER["ordered_outputs"]()], ["2026", "2025-06", "2025-05"])
-        self.assertEqual(section.count('class="output-entry publication"'), 2)
-        self.assertEqual(section.count("conference-presentation"), 1)
-        self.assertIn("Article citations (.bib)", section)
-
-    def test_material_and_hobbies(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("23 pages", html)
-        self.assertIn("Attachment 2", html)
-        self.assertIn("hiking, running, working out, and playing badminton", html)
-        for resource in DATA["materials"]:
-            self.assertTrue((ROOT / resource["file"]).read_bytes().startswith(b"%PDF-"))
-
-    def test_message_form(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('id="message"', html)
-        self.assertIn('data-message-form', html)
-        self.assertIn('action="https://formsubmit.co/hongli.liu@polyu.edu.hk"', html)
-        self.assertNotIn('name="name"', html)
-        self.assertNotIn('name="email"', html)
-        self.assertIn('name="message"', html)
-        self.assertIn('name="_honey"', html)
-        self.assertIn("You do not need to provide your name or email address.", html)
-        self.assertIn("Send anonymously", html)
-        self.assertIn("Messages are processed by FormSubmit", html)
-
-    def test_bibliography(self):
         bib = (ROOT / "publications.bib").read_text(encoding="utf-8")
         self.assertEqual(bib.count("@article{"), 2)
-        self.assertEqual(bib.count("{"), bib.count("}"))
         self.assertLess(bib.index("yu2025graspability"), bib.index("liu2025nd250"))
-        self.assertIn("10.1016/j.jneuroling.2025.101249", bib)
-        self.assertIn("10.1016/j.cortex.2025.04.003", bib)
-
-    def test_no_obsolete_or_private_content(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ["cv_Liu", "tel:", "Chengdu", "Master's student", "fonts.googleapis.com", "PsychoPy", "cortex.2024.08.009", "15082195267@163.com", "hongliliu.research@gmail.com", "incremenrtally", "Assistantat"]:
+        for token in ["15082195267@163.com", "hongliliu.research@gmail.com", "cv_Liu", "tel:", "fonts.googleapis.com"]:
             self.assertNotIn(token, html)
         self.assertIsNone(re.search(r"(?<!\d)1\d{2}[- ]\d{4}[- ]\d{4}(?!\d)", html))
         self.assertEqual(len(ET.parse(ROOT / "sitemap.xml").findall(".//{*}loc")), 1)

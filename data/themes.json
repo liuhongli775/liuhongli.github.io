@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Language comprehension & linguistic representation",
+    "text": "Categorical and continuous representations; syntax–semantics interactions; prediction and integration during incremental comprehension."
+  },
+  {
+    "title": "Neural dynamics of language",
+    "text": "EEG/ERP combined with regression-based ERP estimation, mass-univariate analysis, MVPA, and representational similarity analysis."
+  },
+  {
+    "title": "Computational psycholinguistics",
+    "text": "Language-model surprisal, model-derived representations, human–LM comparison, and computational accounts of processing difficulty."
+  }
+]

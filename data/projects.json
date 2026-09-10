@@ -1,0 +1,71 @@
+{
+  "selected_research": [
+    {
+      "id": "coercion-predictability",
+      "title": "Coercion or Predictability?",
+      "subtitle": "Mandarin Adverb–Noun Constructions",
+      "question": "Do apparently construction-specific neural effects reflect categorical grammatical processing or continuous expectation-related processes?",
+      "text": "I combine EEG/ERP with predictors derived from pretrained language models, cloze probability, and semantic association to examine this question in Mandarin adverb–noun constructions.",
+      "methods": ["EEG/ERP", "GPT-2", "LLaMA", "Surprisal", "rERP", "LMM", "Mass-univariate analysis"],
+      "links": [
+        {"label": "Poster", "href": "#presentation"}
+      ]
+    },
+    {
+      "id": "orthographic-nd250",
+      "title": "Orthographic Processing & the ND250",
+      "subtitle": "Handwritten and Printed Words",
+      "question": "Does the 250-ms ERP difference reflect orthographic-lexicon activation or a prediction-error signal?",
+      "text": "This project compares handwritten and printed words to investigate the functional interpretation of the ND250 during visual word recognition.",
+      "methods": ["EEG/ERP", "Experimental design", "Univariate analysis", "Mass-univariate analysis"],
+      "links": [
+        {"label": "Paper", "href": "https://doi.org/10.1016/j.jneuroling.2025.101249"}
+      ]
+    },
+    {
+      "id": "semantic-size",
+      "title": "Object Size & Semantic Representation",
+      "subtitle": "Words Referring to Small and Large Objects",
+      "question": "Which conceptual dimensions organize the neural representation of words referring to differently sized objects?",
+      "text": "This collaborative project combines behavioral experiments, EEG, multivariate decoding, and semantic ratings to study neural differences in word meaning.",
+      "methods": ["Behavioral experiments", "EEG", "MVPA", "Regression RSA"],
+      "links": [
+        {"label": "Paper", "href": "https://doi.org/10.1016/j.cortex.2025.04.003"}
+      ]
+    }
+  ],
+  "computational_projects": [
+    {
+      "title": "LLM Surprisal for Mandarin Sentence Processing",
+      "problem": "Quantify graded contextual expectation in Mandarin sentence materials.",
+      "data": "Sentence stimuli, cloze norms, behavioral measures, and trial-level EEG.",
+      "method": "GPT-2 / LLaMA · Hugging Face · Python",
+      "output": "Word-level surprisal predictors aligned with human behavioral and neural data.",
+      "status": "Research workflow"
+    },
+    {
+      "title": "Regression-based ERP Analysis",
+      "problem": "Estimate overlapping categorical and continuous effects without reducing trial-level variability to condition averages.",
+      "data": "Single-trial EEG with linguistic and computational predictors.",
+      "method": "rERP · Linear mixed models · R / Python",
+      "output": "Time-resolved estimates of predictor effects on neural activity.",
+      "status": "Analysis workflow"
+    },
+    {
+      "title": "Mass-univariate EEG Analysis",
+      "problem": "Evaluate distributed effects across electrodes and time while controlling multiple comparisons.",
+      "data": "Epoched EEG and condition- or trial-level predictors.",
+      "method": "Mass-univariate testing · FDR correction · MATLAB",
+      "output": "Exploratory spatiotemporal inference for ERP effects.",
+      "status": "Analysis workflow"
+    },
+    {
+      "title": "MVPA / RSA Pipelines",
+      "problem": "Relate distributed neural response patterns to conceptual and model-derived representational spaces.",
+      "data": "EEG patterns, semantic ratings, and representational models.",
+      "method": "MVPA-Light · Regression RSA · MATLAB",
+      "output": "Decoding and model-alignment analyses of neural representations.",
+      "status": "Analysis workflow"
+    }
+  ]
+}
