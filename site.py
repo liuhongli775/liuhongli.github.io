@@ -160,7 +160,7 @@ def render():
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Hongli Liu | Psycholinguistics &amp; Cognitive Neuroscience</title>
   <meta name="description" content="{e(description)}"><meta name="author" content="{e(d['name'])}">
-  <meta name="theme-color" content="#f4f3ef"><meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#ffffff"><meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="canonical" href="{e(d['url'])}/"><meta property="og:type" content="profile">
   <meta property="og:title" content="Hongli Liu | Psycholinguistics &amp; Cognitive Neuroscience">
   <meta property="og:description" content="{e(description)}"><meta property="og:url" content="{e(d['url'])}/">

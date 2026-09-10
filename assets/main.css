@@ -1,11 +1,11 @@
 :root {
-  --paper: #f4f3ef;
-  --surface: #fffefa;
-  --ink: #1f2022;
-  --muted: #5e6164;
-  --accent: #70414a;
-  --accent-dark: #543139;
-  --line: #d6d3ce;
+  --paper: #ffffff;
+  --surface: #ffffff;
+  --ink: #1c2126;
+  --muted: #5d646a;
+  --accent: #3f6075;
+  --accent-dark: #2f4b5e;
+  --line: #d8dde1;
   --serif: Georgia, "Times New Roman", serif;
   --sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
@@ -29,7 +29,7 @@ a:focus-visible, button:focus-visible, textarea:focus-visible {
 }
 button, textarea { font: inherit; }
 button { cursor: pointer; }
-::selection { background: #e3d9dc; }
+::selection { background: #dce7ed; }
 
 .site-width { width: min(1000px, calc(100% - 64px)); margin-inline: auto; }
 .sr-only {
@@ -62,7 +62,7 @@ button { cursor: pointer; }
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(244, 243, 239, .97);
+  background: rgba(255, 255, 255, .97);
   border-bottom: 1px solid var(--line);
 }
 .nav-inner {
@@ -104,9 +104,9 @@ button { cursor: pointer; }
 .position span { font-weight: 650; }
 .identity-line { margin-top: 15px; color: var(--muted); font-size: 14px; }
 .research-intro { max-width: 680px; margin-top: 31px; font-size: 19px; line-height: 1.72; }
-.background { max-width: 680px; margin-top: 20px; color: #4d4f51; }
+.background { max-width: 680px; margin-top: 20px; color: #474d52; }
 .about-links { margin-top: 26px; font-size: 14px; }
-.about-links span { color: #a19c93; }
+.about-links span { color: #a6abb0; }
 .about-portrait { width: 100%; }
 .about-portrait img {
   display: block;
@@ -126,7 +126,7 @@ button { cursor: pointer; }
   line-height: 1.16;
   letter-spacing: -.02em;
 }
-.section-intro { max-width: 680px; margin-top: 18px; color: #4d4f51; }
+.section-intro { max-width: 680px; margin-top: 18px; color: #474d52; }
 
 .interest-list { margin-top: 34px; border-top: 1px solid var(--line); }
 .interest-entry {
@@ -222,12 +222,12 @@ button { cursor: pointer; }
   min-height: 158px;
   resize: vertical;
   padding: 13px 14px;
-  border: 1px solid #b8b4ae;
+  border: 1px solid #b9c0c5;
   border-radius: 0;
   background: var(--surface);
   color: var(--ink);
 }
-.message-form textarea::placeholder { color: #7f8183; }
+.message-form textarea::placeholder { color: #7b8389; }
 .form-actions { margin-top: 12px; }
 .form-actions button {
   padding: 9px 18px;
@@ -313,7 +313,7 @@ button { cursor: pointer; }
 
 @media print {
   @page { margin: 15mm; }
-  body { background: white; color: #1f2022; font-size: 10pt; }
+  body { background: white; color: #1c2126; font-size: 10pt; }
   .top-nav, .about-portrait, .about-links, .hobby-photos, .message-form, .site-footer { display: none !important; }
   .site-width { width: 100%; }
   .about { display: block; padding: 0 0 25px; }
