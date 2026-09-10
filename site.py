@@ -123,7 +123,7 @@ def render():
         ("About Me", "#about"),
         ("Interests", "#interests"),
         ("Research", "#research"),
-        ("Reading", "#reading"),
+        ("Waiting", "#reading"),
         ("Hobbies", "#hobbies"),
     ]
     nav_html = "".join(link(label, href) for label, href in nav_items)
@@ -134,7 +134,7 @@ def render():
     if READINGS:
         readings_html = "".join(reading_entry(item) for item in READINGS)
     else:
-        readings_html = '<p class="reading-empty">Notes from recent reading will appear here.</p>'
+        readings_html = ""
 
     hobby_images_html = "".join(
         f'<figure><img src="./{e(item["file"])}?v={version}" alt="{e(item["alt"])}" width="{e(item["width"])}" height="{e(item["height"])}"></figure>'
@@ -201,7 +201,7 @@ def render():
     </section>
 
     <section class="section site-width" id="reading" aria-labelledby="reading-heading">
-      <h2 id="reading-heading">Recent Reading</h2>
+      <h2 id="reading-heading">Waiting</h2>
       {readings_html}
     </section>
 

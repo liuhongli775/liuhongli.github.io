@@ -171,7 +171,6 @@ button { cursor: pointer; }
 .research-title-link { color: var(--ink); }
 .research-title-link:hover { color: var(--accent); }
 
-.reading-empty { margin-top: 20px; color: var(--muted); font-size: 14px; }
 .reading-entry { padding: 22px 0; border-bottom: 1px solid var(--line); }
 .reading-entry h3 { max-width: 720px; font-size: 21px; line-height: 1.35; }
 .reading-entry h3 a { color: var(--ink); }

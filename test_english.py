@@ -48,7 +48,7 @@ class EditorialHomepage(unittest.TestCase):
         section_ids = [attrs["id"] for tag, attrs in parser.tags if tag == "section" and "id" in attrs]
         self.assertEqual(section_ids, ["about", "interests", "research", "reading", "hobbies", "message"])
         headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html)
-        self.assertEqual(headings, ["Research Interests", "Research", "Recent Reading", "Hobbies", "Message Me"])
+        self.assertEqual(headings, ["Research Interests", "Research", "Waiting", "Hobbies", "Message Me"])
         self.assertEqual(html.count('class="research-entry"'), 3)
 
     def test_about_identity_and_real_links_only(self):
@@ -123,7 +123,9 @@ class EditorialHomepage(unittest.TestCase):
     def test_empty_reading_is_intentional(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         reading = html.split('id="reading"', 1)[1].split("</section>", 1)[0]
-        self.assertIn("Notes from recent reading will appear here.", reading)
+        self.assertIn("Waiting", reading)
+        self.assertNotIn("Notes from recent reading will appear here.", reading)
+        self.assertNotIn("will appear here", reading)
         self.assertNotIn("dashed", reading)
         self.assertNotIn("reading-placeholder", reading)
 
