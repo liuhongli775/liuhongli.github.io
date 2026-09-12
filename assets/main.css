@@ -6,7 +6,7 @@
   --accent: #3f6075;
   --accent-dark: #2f4b5e;
   --line: #d8dde1;
-  --serif: Georgia, "Times New Roman", serif;
+  --heading: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
 }
 
@@ -20,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, p, figure { margin: 0; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
+h1, h2, h3 { font-family: var(--heading); font-weight: 650; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 a:focus-visible, button:focus-visible, textarea:focus-visible {
@@ -74,7 +74,8 @@ button { cursor: pointer; }
 }
 .wordmark {
   color: var(--ink);
-  font: 18px/1.2 var(--serif);
+  font: 700 17px/1.2 var(--heading);
+  letter-spacing: -.01em;
   white-space: nowrap;
 }
 .wordmark:hover { color: var(--accent); text-decoration: none; }
@@ -97,8 +98,9 @@ button { cursor: pointer; }
 .about-copy { max-width: 700px; }
 .about h1 {
   font-size: clamp(52px, 5.2vw, 62px);
+  font-weight: 700;
   line-height: 1.02;
-  letter-spacing: -.035em;
+  letter-spacing: -.045em;
 }
 .position { margin-top: 20px; font-size: 15px; line-height: 1.62; }
 .position span { font-weight: 650; }
@@ -123,8 +125,9 @@ button { cursor: pointer; }
 }
 .section h2 {
   font-size: 36px;
+  font-weight: 650;
   line-height: 1.16;
-  letter-spacing: -.02em;
+  letter-spacing: -.025em;
 }
 .section-intro { max-width: 680px; margin-top: 18px; color: #474d52; }
 
@@ -151,8 +154,9 @@ button { cursor: pointer; }
 .research-header h3 {
   max-width: 700px;
   font-size: 29px;
+  font-weight: 650;
   line-height: 1.22;
-  letter-spacing: -.02em;
+  letter-spacing: -.025em;
 }
 .research-subtitle { max-width: 700px; margin-top: 8px; color: var(--muted); font-size: 16px; }
 .research-meta {
@@ -164,9 +168,14 @@ button { cursor: pointer; }
 }
 .research-body { max-width: 720px; margin-top: 23px; }
 .research-body > p + p { margin-top: 14px; }
-.research-question { font: 18px/1.62 var(--serif); }
+.research-question { font: 600 17px/1.62 var(--sans); }
 .research-citation { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-.citation-doi { text-decoration-color: #a9b8c0; text-underline-offset: 2px; }
+.citation-doi {
+  text-decoration: underline;
+  text-decoration-color: #8ea1ac;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
 .research-methods { color: var(--muted); font-size: 13px; }
 .research-methods span { color: var(--ink); font-weight: 650; }
 .research-title-link { color: var(--ink); }
@@ -188,21 +197,31 @@ button { cursor: pointer; }
 }
 .hobbies-layout p { margin-top: 18px; color: var(--muted); }
 .hobby-photos {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 500px;
+  min-height: 205px;
   margin-left: auto;
 }
-.hobby-photos figure { overflow: hidden; }
+.hobby-photos figure {
+  position: absolute;
+  width: 150px;
+  padding: 4px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.hobby-photos figure:nth-child(1) { top: 28px; left: 3%; transform: rotate(-4deg); }
+.hobby-photos figure:nth-child(2) { top: 2px; left: 35%; z-index: 2; width: 158px; transform: rotate(2.5deg); }
+.hobby-photos figure:nth-child(3) { top: 42px; right: 2%; width: 145px; transform: rotate(-2deg); }
 .hobby-photos img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 116px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+.hobby-photos figure:nth-child(3) img { height: 102px; }
 
 .form-honey {
   position: absolute !important;
@@ -240,6 +259,7 @@ button { cursor: pointer; }
 .form-actions button:hover { background: var(--accent-dark); }
 .form-actions button:disabled { cursor: wait; opacity: .7; }
 .form-note { margin-top: 11px; color: var(--muted); font-size: 12px; }
+.form-note a { text-decoration: underline; text-underline-offset: 2px; }
 .message-status { min-height: 18px; margin-top: 8px; color: var(--muted); font-size: 12.5px; }
 .message-email { margin-top: 15px; font-size: 13px; }
 
@@ -296,7 +316,13 @@ button { cursor: pointer; }
   .research-meta { padding-top: 0; text-align: left; }
   .research-body { margin-top: 20px; }
   .hobbies-layout { grid-template-columns: 1fr; gap: 28px; }
-  .hobby-photos { gap: 8px; margin-left: 0; }
+  .hobby-photos { max-width: 410px; min-height: 165px; margin-left: 0; }
+  .hobby-photos figure { width: 31%; max-width: 112px; padding: 3px; }
+  .hobby-photos figure:nth-child(1) { top: 23px; left: 1%; }
+  .hobby-photos figure:nth-child(2) { top: 0; left: 34%; width: 33%; max-width: 118px; }
+  .hobby-photos figure:nth-child(3) { top: 31px; right: 1%; width: 30%; max-width: 108px; }
+  .hobby-photos img { height: 86px; }
+  .hobby-photos figure:nth-child(3) img { height: 75px; }
   .message-form textarea { min-height: 145px; }
   .form-actions button { width: 100%; }
   .site-footer .site-width {

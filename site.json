@@ -3,8 +3,8 @@
   "email": "hongli.liu@polyu.edu.hk",
   "github": "https://github.com/liuhongli775",
   "url": "https://liuhongli775.github.io",
-  "updated": "2026-09-10",
-  "asset_version": "20260910-editorial-home-9",
+  "updated": "2026-09-12",
+  "asset_version": "20260912-sturdy-scatter-1",
   "identity_line": "Psycholinguistics · Cognitive Neuroscience · Computational Modeling",
   "research_statement": "I study how linguistic knowledge is represented and processed during real-time language comprehension. I am particularly interested in the relationship between categorical linguistic representations and continuous semantic and probabilistic information, and in how experimental, neural, and computational approaches can be combined to investigate this relationship.",
   "links": {
@@ -30,6 +30,13 @@
         "label": "Hiking",
         "width": 1279,
         "height": 1706
+      },
+      {
+        "file": "assets/daily.jpg",
+        "alt": "Hongli Liu seated by a window",
+        "label": "Everyday moments",
+        "width": 1707,
+        "height": 1280
       }
     ]
   },

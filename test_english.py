@@ -123,7 +123,6 @@ class EditorialHomepage(unittest.TestCase):
             "@keyframes",
             "linear-gradient",
             "box-shadow",
-            "rotate(",
         ]:
             self.assertNotIn(token, page)
 
@@ -139,16 +138,19 @@ class EditorialHomepage(unittest.TestCase):
         self.assertIn('"title": "Paper title"', reading)
         self.assertIn('"note": "One short sentence."', reading)
 
-    def test_hobbies_use_two_existing_photos(self):
+    def test_hobbies_use_three_scattered_photos(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = (ROOT / "assets/main.css").read_text(encoding="utf-8")
         images = [attrs for tag, attrs in Parser(ROOT / "index.html").tags if tag == "img"]
-        self.assertEqual(len(images), 3)
+        self.assertEqual(len(images), 4)
         self.assertTrue(all(item.get("alt", "").strip() for item in images))
-        self.assertNotIn("assets/daily.jpg", html)
+        self.assertIn("assets/daily.jpg", html)
         for image in [DATA["images"]["profile"], *DATA["images"]["hobbies"]]:
             self.assertTrue((ROOT / image["file"]).is_file())
             self.assertIn(image["file"] + "?v=" + DATA["asset_version"], html)
-        self.assertEqual(len(DATA["images"]["hobbies"]), 2)
+        self.assertEqual(len(DATA["images"]["hobbies"]), 3)
+        self.assertIn(".hobby-photos figure:nth-child(3)", css)
+        self.assertIn("transform: rotate", css)
 
     def test_anonymous_message_form(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
