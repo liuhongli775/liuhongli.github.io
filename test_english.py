@@ -48,7 +48,7 @@ class EditorialHomepage(unittest.TestCase):
         section_ids = [attrs["id"] for tag, attrs in parser.tags if tag == "section" and "id" in attrs]
         self.assertEqual(section_ids, ["about", "interests", "research", "reading", "hobbies", "message"])
         headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html)
-        self.assertEqual(headings, ["Research Interests", "Research", "Recent Reading", "Hobbies", "Message Me"])
+        self.assertEqual(headings, ["Research Interests", "Publications &amp; Presentations", "Recent Reading", "Hobbies", "Message Me"])
         self.assertEqual(html.count('class="research-entry"'), 3)
 
     def test_about_identity_and_real_links_only(self):

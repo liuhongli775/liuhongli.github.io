@@ -123,7 +123,7 @@ def render():
     nav_items = [
         ("About Me", "#about"),
         ("Interests", "#interests"),
-        ("Research", "#research"),
+        ("Publications & Presentations", "#research"),
         ("Reading", "#reading"),
         ("Hobbies", "#hobbies"),
     ]
@@ -205,7 +205,7 @@ def render():
     </section>
 
     <section class="section site-width" id="research" aria-labelledby="research-heading">
-      <h2 id="research-heading">Research</h2>
+      <h2 id="research-heading">Publications &amp; Presentations</h2>
       <div class="research-list">{research_html}</div>
     </section>
 

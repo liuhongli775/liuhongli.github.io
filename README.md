@@ -10,12 +10,12 @@ The homepage contains six sections, in this order:
 
 1. About Me
 2. Research Interests
-3. Research
+3. Publications & Presentations
 4. Recent Reading
 5. Hobbies
 6. Message Me
 
-Publications and the conference poster are incorporated into Research. There are intentionally no separate publications, computational-projects, education, resources, or contact sections.
+Journal publications and the conference poster are presented together under Publications & Presentations. There are intentionally no separate computational-projects, education, resources, or contact sections.
 
 ## Where to edit content
 
